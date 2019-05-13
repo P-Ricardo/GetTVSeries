@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
+    private UserSettingsFragment userSettingsFragment;
+    private MyListFragment myListFragment;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -31,17 +33,24 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_search:
 
                     searchFragment = new SearchFragment();
-                    FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-                    transaction2.replace(R.id.frameContent, searchFragment);
-                    transaction2.commit();
+                    FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+                    transaction1.replace(R.id.frameContent, searchFragment);
+                    transaction1.commit();
                     return true;
                 case R.id.navigation_mylist:
-                    Toast.makeText(MainActivity.this, "Clicked Button", Toast.LENGTH_SHORT).show();
+
+                    myListFragment = new MyListFragment();
+                    FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+                    transaction2.replace(R.id.frameContent, myListFragment);
+                    transaction2.commit();
                     return true;
                 case R.id.navigation_settings:
-                    Toast.makeText(MainActivity.this, "Clicked Button", Toast.LENGTH_SHORT).show();
-                    return true;
 
+                    userSettingsFragment = new UserSettingsFragment();
+                    FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+                    transaction3.replace(R.id.frameContent, userSettingsFragment);
+                    transaction3.commit();
+                    return true;
             }
             return false;
         }
@@ -59,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameContent, homeFragment);
         transaction.commit();
+
+
 
     }
 
