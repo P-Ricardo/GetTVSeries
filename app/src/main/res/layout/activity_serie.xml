@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".SerieActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.levez.expandablecard.ExpandableView
+                android:id="@+id/expandableview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:animation="true"
+                app:child_layout="@layout/fragment_home"
+                app:drawable_indicator_color="@android:color/white"
+                app:header_clickable="true"
+                app:header_color="@color/colorAccent"
+                app:header_elevation="4dp"
+                app:icon="@drawable/ic_ondemand_video_24dp"
+                app:icon_color="@android:color/white"
+                app:start_expanded="false"
+                app:title_header="Android teste Expandable"
+                app:title_header_color="@android:color/white"
+
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
