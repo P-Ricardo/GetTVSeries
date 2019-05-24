@@ -1,7 +1,9 @@
 package com.example.gettvseries;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +11,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.gettvseries.activity.SeriesByGenreListActivity;
+import com.example.gettvseries.models.Client;
+import com.example.gettvseries.models.Constant;
+import com.example.gettvseries.models.Genre;
+import com.example.gettvseries.models.GenresResponse;
+import com.example.gettvseries.models.TheMoviesDbapi;
+
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -21,6 +34,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerButtons;
+    private TheMoviesDbapi theMovieDBAppi;
+    private GenreButtonsAdapter adapter;
+    private View mView;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -31,21 +48,69 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        mView = inflater.inflate(R.layout.fragment_home, container, false);
+        return mView;
+    }
 
-        recyclerButtons = view.findViewById(R.id.recycler_buttons);
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getGenres();
+    }
+
+    private void getGenres() {
+
+
+        Retrofit retrofit = Client.getClient();
+
+        theMovieDBAppi = retrofit.create(TheMoviesDbapi.class);
+
+        Call<GenresResponse> call = theMovieDBAppi.getGenres(Constant.API_KEY);
+
+
+        call.enqueue(new Callback<GenresResponse>() {
+
+
+            @Override
+            public void onResponse(Call<GenresResponse> call, Response<GenresResponse> response) {
+
+
+                assert response.body() != null;
+                List<Genre> genres = response.body().getGenres();
+
+                setupLista(genres);
+
+            }
+            @Override
+            public void onFailure(Call<GenresResponse> call, Throwable t) {
+
+
+                Toast.makeText(getContext(), "Deu pau", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    private void setupLista(List<Genre> genres) {
+
+        recyclerButtons = mView.findViewById(R.id.recycler_buttons);
         recyclerButtons.setHasFixedSize(true);
         recyclerButtons.setLayoutManager(
                 new LinearLayoutManager(
-                       getContext(),
+                        getContext(),
                         LinearLayoutManager.HORIZONTAL,
                         false));
-        GenreButtonsAdapter adapter = new GenreButtonsAdapter(getGenres());
+
+
+        adapter = new GenreButtonsAdapter(genres);
 
         adapter.setOnGenreListener(new OnGenreListener() {
             @Override
             public void onGenreClick(View v, int position) {
-                Log.d("TAG Click", "onGenreClick: " + position);
+
+                startActivity(new Intent(getContext(), SeriesByGenreListActivity.class));
             }
 
             @Override
@@ -55,26 +120,5 @@ public class HomeFragment extends Fragment {
         });
 
         recyclerButtons.setAdapter(adapter);
-
-        return view;
-
     }
-
-    private List<String> getGenres() {
-
-        ArrayList<String> list = new ArrayList<>();
-
-        list.add("Action");
-        list.add("Adventure");
-        list.add("Animation");
-        list.add("Comedy");
-        list.add("Fantasy");
-        list.add("Drama");
-        list.add("Horror");
-        list.add("Romance");
-        list.add("Sci-fi");
-
-        return list;
-    }
-
 }

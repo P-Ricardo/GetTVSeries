@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gettvseries.models.Genre;
+
 import java.util.List;
 
 public class GenreButtonsAdapter extends RecyclerView.Adapter<GenreButtonsAdapter.ViewHolder>{
 
-    private List<String> mGenres;
+    private List<Genre> mGenres;
     private OnGenreListener mListener;
 
-    public GenreButtonsAdapter(List<String> genres) {
+    public GenreButtonsAdapter(List<Genre> genres) {
         this.mGenres = genres;
     }
 
@@ -31,10 +33,9 @@ public class GenreButtonsAdapter extends RecyclerView.Adapter<GenreButtonsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.textGenre.setText(mGenres.get(i));
+        viewHolder.textGenre.setText(mGenres.get(i).getName());
         viewHolder.bindClick(i);
     }
-
     @Override
     public int getItemCount() {
         return (mGenres!=null ? mGenres.size() : 0);
