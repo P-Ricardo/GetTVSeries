@@ -7,8 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +21,7 @@ import com.example.gettvseries.activity.SeriesByGenreListActivity;
 import com.example.gettvseries.models.Client;
 import com.example.gettvseries.models.Constant;
 import com.example.gettvseries.models.Genre;
+import com.example.gettvseries.models.GenreService;
 import com.example.gettvseries.models.GenresResponse;
 import com.example.gettvseries.models.TheMoviesDbapi;
 
@@ -34,10 +39,14 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerButtons;
-    private TheMoviesDbapi theMovieDBAppi;
     private GenreButtonsAdapter adapter;
     private View mView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,9 +58,15 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_home, container, false);
+
         return mView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -62,11 +77,8 @@ public class HomeFragment extends Fragment {
     private void getGenres() {
 
 
-        Retrofit retrofit = Client.getClient();
 
-        theMovieDBAppi = retrofit.create(TheMoviesDbapi.class);
-
-        Call<GenresResponse> call = theMovieDBAppi.getGenres(Constant.API_KEY);
+        Call<GenresResponse> call = Client.getGenresService().getBGenres(Constant.API_KEY);
 
 
         call.enqueue(new Callback<GenresResponse>() {

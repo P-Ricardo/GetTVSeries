@@ -11,8 +11,10 @@ import retrofit2.http.GET;
 public class Genre {
 
     @SerializedName("id")
+    @Expose
     private Integer id;
     @SerializedName("name")
+    @Expose
     private String name;
 
 

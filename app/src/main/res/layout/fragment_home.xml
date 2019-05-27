@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
+
     >
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
+        android:id="@+id/scrollView6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="71dp"
         tools:layout_editor_absoluteY="0dp">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,7 +25,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/white" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_buttons"
                 android:layout_width="wrap_content"
@@ -35,19 +37,22 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/white" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/white" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@android:color/darker_gray"/>
+                android:background="@android:color/darker_gray" />
 
 
         </LinearLayout>
@@ -56,6 +61,4 @@
     </ScrollView>
 
 
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
