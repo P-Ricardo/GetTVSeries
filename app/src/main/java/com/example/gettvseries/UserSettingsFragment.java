@@ -3,6 +3,7 @@ package com.example.gettvseries;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -60,6 +61,13 @@ public class UserSettingsFragment extends Fragment {
     private View view;
     private FirebaseAuth authentication;
 
+    private String[] necessaryPermissions = new String[]{
+
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+
+    };
+
 
 
 
@@ -83,7 +91,9 @@ public class UserSettingsFragment extends Fragment {
         circleImageView = view.findViewById(R.id.circleImageView);
         editProfileName = view.findViewById(R.id.editProfileName);
 
-        /*
+        Permission.validatePermissions(necessaryPermissions, getActivity(), 1);
+
+
         FirebaseUser user = FirebaseUsers.gettheCurrentUser();
         Uri url = user.getPhotoUrl();
         if (url != null){
@@ -105,7 +115,7 @@ public class UserSettingsFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getPackageManager()) != null){
+                if(intent.resolveActivity(getContext().getPackageManager()) != null){
 
                     startActivityForResult(intent, CAMERA_SELECTION);
                 }
@@ -117,25 +127,26 @@ public class UserSettingsFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if(intent.resolveActivity(getPackageManager()) != null){
+                if(intent.resolveActivity(getContext().getPackageManager()) != null){
 
                     startActivityForResult(intent, GALLERY_SELECTION);
                 }
             }
         });
-        */
+
 
 
 
         return view;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        /*
-        if (resultCode == RESULT_OK){
+
+        if (resultCode == getActivity().RESULT_OK){
 
             Bitmap image= null;
 
@@ -144,14 +155,14 @@ public class UserSettingsFragment extends Fragment {
                 switch (requestCode){
 
                     case CAMERA_SELECTION:
+
                         image = (Bitmap) data.getExtras().get("data");
                         break;
 
                     case GALLERY_SELECTION:
-
                         Uri localImagemSelecionada = data.getData();
-                        image = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada);
-                        break;
+                        image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), localImagemSelecionada);break;
+
                 }
 
                 if (image != null){
@@ -209,7 +220,7 @@ public class UserSettingsFragment extends Fragment {
             }
         }
 
-    */
+
     }
 
     public void updateUserPicture(Uri url){
@@ -252,31 +263,7 @@ public class UserSettingsFragment extends Fragment {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-
-
-            case R.id.menuLogout:
-
-                logout();
-                break;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void logout(){
-
-        try {
-            authentication.signOut();
-        }catch (Exception e){
-
-            e.printStackTrace();
-        }
-    }
 
 
 
