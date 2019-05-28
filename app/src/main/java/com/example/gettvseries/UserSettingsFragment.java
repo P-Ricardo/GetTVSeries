@@ -244,7 +244,6 @@ public class UserSettingsFragment extends Fragment {
         }
 
     }
-
     public void permissionValidationAlert(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -262,9 +261,5 @@ public class UserSettingsFragment extends Fragment {
         dialog.show();
 
     }
-
-
-
-
 
 }

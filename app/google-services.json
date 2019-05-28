@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "203333032073",
+    "firebase_url": "https://gettvseries.firebaseio.com",
+    "project_id": "gettvseries",
+    "storage_bucket": "gettvseries.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203333032073:android:dd8ba7bbc36f2315",
+        "android_client_info": {
+          "package_name": "com.example.gettvseries"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203333032073-4a451cnlpri9jo3dc7fq1p4o42ct6i3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gettvseries",
+            "certificate_hash": "21b29aa840b5c253238541401778e44e16500327"
+          }
+        },
+        {
+          "client_id": "203333032073-11uljjrk5ioflpepqn9b43qqeo2il8v2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNj-R06775LgbmDeeiIAlJAl4rjtFVjTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203333032073-11uljjrk5ioflpepqn9b43qqeo2il8v2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
