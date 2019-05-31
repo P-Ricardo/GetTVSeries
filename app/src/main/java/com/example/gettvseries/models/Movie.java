@@ -1,8 +1,12 @@
 package com.example.gettvseries.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Movie extends Cinematographic {
+
 
     private Boolean video;
     private String title;

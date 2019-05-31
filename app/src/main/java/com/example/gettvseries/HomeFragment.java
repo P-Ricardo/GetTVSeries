@@ -17,12 +17,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.gettvseries.activity.MoviesByGenreActivity;
 import com.example.gettvseries.activity.SeriesByGenreListActivity;
+import com.example.gettvseries.models.Cinematographic;
+import com.example.gettvseries.models.CinematographicListAdapter;
+import com.example.gettvseries.models.CinematographicsResponse;
 import com.example.gettvseries.models.Client;
 import com.example.gettvseries.models.Constant;
 import com.example.gettvseries.models.Genre;
 import com.example.gettvseries.models.GenreService;
 import com.example.gettvseries.models.GenresResponse;
+import com.example.gettvseries.models.OnItemClickListener;
+import com.example.gettvseries.models.PaginationScrollListener;
 import com.example.gettvseries.models.TheMoviesDbapi;
 
 import java.util.List;
@@ -38,8 +44,9 @@ import retrofit2.Retrofit;
  */
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerButtons;
+    private RecyclerView recyclerButtons, recyclerTopRated;
     private GenreButtonsAdapter adapter;
+    private CinematographicListAdapter madapter;
     private View mView;
 
     @Override
@@ -72,6 +79,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getGenres();
+        getTopRated();
     }
 
     private void getGenres() {
@@ -105,7 +113,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setupLista(List<Genre> genres) {
+    private void setupLista(final List<Genre> genres) {
 
         recyclerButtons = mView.findViewById(R.id.recycler_buttons);
         recyclerButtons.setHasFixedSize(true);
@@ -122,7 +130,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onGenreClick(View v, int position) {
 
-                startActivity(new Intent(getContext(), SeriesByGenreListActivity.class));
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getContext(), MoviesByGenreActivity.class);
+                bundle.putSerializable("genre_id", genres.get(position).getId());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
@@ -132,5 +144,46 @@ public class HomeFragment extends Fragment {
         });
 
         recyclerButtons.setAdapter(adapter);
+    }
+    private void getTopRated(){
+
+        Call<CinematographicsResponse> call = Client.getCinematographicService().getMovies(Constant.API_KEY, "pt-BR", 1);
+
+        call.enqueue(new Callback<CinematographicsResponse>() {
+            @Override
+            public void onResponse(Call<CinematographicsResponse> call, Response<CinematographicsResponse> response) {
+
+                assert response.body() != null;
+
+                List<Cinematographic> movies = response.body().getMovies();
+                setupTopRated(movies);
+            }
+
+            @Override
+            public void onFailure(Call<CinematographicsResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+    private void setupTopRated(List<Cinematographic> movies){
+
+        recyclerTopRated = mView.findViewById(R.id.recycler_top_rated);
+        LinearLayoutManager layout = new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false);
+        recyclerTopRated.setHasFixedSize(true);
+        recyclerTopRated.setLayoutManager(layout);
+        madapter = new CinematographicListAdapter(movies);
+        recyclerTopRated.setAdapter(madapter);
+        madapter.setClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+
+                startActivity(new Intent(getContext(), SeriesByGenreListActivity.class));
+            }
+        });
     }
 }

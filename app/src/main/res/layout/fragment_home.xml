@@ -34,10 +34,11 @@
                 tools:layout_editor_absoluteX="186dp"
                 tools:layout_editor_absoluteY="90dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@android:color/white" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_top_rated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"/>
 
             <ImageView
                 android:layout_width="match_parent"

@@ -52,6 +52,46 @@ public class Client {
         return getService(GenreService.class);
     }
 
+
+
+    private static <T> T getCinematographic(Class<T> service) {
+
+
+        synchronized (Client.class){
+
+
+            if(mRetrofit==null){
+
+
+                HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+                OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                        .connectTimeout(30, TimeUnit.MINUTES)
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .writeTimeout(15, TimeUnit.SECONDS)
+                        .addInterceptor(httpLoggingInterceptor)
+                        .build();
+
+                mRetrofit = new Retrofit
+                        .Builder()
+                        .baseUrl(Constant.BASE_URL)
+                        .client(okHttpClient)
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+        }
+
+        return mRetrofit.create(service);
+    }
+
+    public static CinematographicService getCinematographicService(){
+        return getCinematographic(CinematographicService.class);
+    }
+
+
+
     /*
 
     public static Retrofit retrofit = null;
