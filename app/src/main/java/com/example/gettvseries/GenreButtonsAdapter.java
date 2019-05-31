@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.gettvseries.models.Genre;
-
 import java.util.List;
 
 public class GenreButtonsAdapter extends RecyclerView.Adapter<GenreButtonsAdapter.ViewHolder>{

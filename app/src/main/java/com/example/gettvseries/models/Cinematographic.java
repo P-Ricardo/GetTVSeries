@@ -1,14 +1,9 @@
 package com.example.gettvseries.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Cinematographic {
 
-    @SerializedName("poster_path")
-    @Expose
     private String posterPath;
     private List<Integer> genreIds = null;
     private String originalLanguage;
@@ -17,8 +12,6 @@ public class Cinematographic {
     private Double popularity;
     private Integer voteCount;
     private Double voteAverage;
-    @SerializedName("id")
-    @Expose
     private Integer id;
     private boolean favorite;
     private long idDatabase;
