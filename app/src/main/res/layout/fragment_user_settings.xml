@@ -40,12 +40,12 @@
 
         <EditText
             android:id="@+id/editProfileName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Username" />
+            android:text="@string/username_hint" />
 
         <ImageView
             android:id="@+id/imageView3"

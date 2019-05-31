@@ -34,7 +34,7 @@
             android:id="@+id/editRegisterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your name"
+            android:hint="@string/name_hint"
             android:inputType="text"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -54,7 +54,7 @@
             android:id="@+id/editRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your email"
+            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -74,7 +74,7 @@
             android:id="@+id/editRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter a password"
+            android:hint="@string/pwd_reg_hint"
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Register"
+        android:text="@string/bt_register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

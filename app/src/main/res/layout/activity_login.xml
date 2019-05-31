@@ -23,7 +23,7 @@
             android:id="@+id/editLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your email"
+            android:hint="@string/login_hint"
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -43,7 +43,7 @@
             android:id="@+id/editLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your password"
+            android:hint="@string/pwd_hint"
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -54,7 +54,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="Log in"
+        android:text="@string/bt_login"
         android:textStyle="normal"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
@@ -67,7 +67,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You do not have an account? Sign up"
+        android:text="@string/sign_up_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        android:background="@drawable/gettvseries_icon"
+        android:background="@drawable/gettvseries_icon_backup"
         />
-
 
 </android.support.constraint.ConstraintLayout>

@@ -25,6 +25,7 @@ import com.example.gettvseries.models.GenreService;
 import com.example.gettvseries.models.GenresResponse;
 import com.example.gettvseries.models.TheMoviesDbapi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -116,21 +117,21 @@ public class HomeFragment extends Fragment {
                         false));
 
 
-        adapter = new GenreButtonsAdapter(genres);
-
-        adapter.setOnGenreListener(new OnGenreListener() {
-            @Override
-            public void onGenreClick(View v, int position) {
-
-                startActivity(new Intent(getContext(), SeriesByGenreListActivity.class));
-            }
-
-            @Override
-            public void onLongGenreClick(View v, int position) {
-                Log.d("TAG Click", "onLongGenreClick: " + position);
-            }
-        });
-
-        recyclerButtons.setAdapter(adapter);
+//        adapter = new GenreButtonsAdapter(genres);
+//
+//        adapter.setOnGenreListener(new OnGenreListener() {
+//            @Override
+//            public void onGenreClick(View v, int position) {
+//
+//                startActivity(new Intent(getContext(), SeriesByGenreListActivity.class));
+//            }
+//
+//            @Override
+//            public void onLongGenreClick(View v, int position) {
+//                Log.d("TAG Click", "onLongGenreClick: " + position);
+//            }
+//        });
+//
+//        recyclerButtons.setAdapter(adapter);
     }
 }

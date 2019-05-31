@@ -15,7 +15,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <style name="Toolbar" parent="Theme.AppCompat.NoActionBar"/>
+
+    <!-- Applied style on Activity -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>
