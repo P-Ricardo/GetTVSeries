@@ -13,14 +13,12 @@ import android.widget.Toolbar;
 import com.example.gettvseries.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SearchFragment extends Fragment {
 
+    private View view;
 
     public SearchFragment() {
-        // Required empty public constructor
+        // Requires empty public constructor
     }
 
 
@@ -28,7 +26,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        view = inflater.inflate(R.layout.fragment_search, container, false);
 
 
 

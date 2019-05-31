@@ -18,7 +18,6 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".View.Activities.RegisterActivity"></activity>
         <activity android:name=".View.Activities.MainActivity" />
-        <activity android:name=".View.Activities.MoviesByGenreActivity" />
         <activity android:name=".View.Activities.LoginActivity"/>
         <activity
             android:name=".View.Activities.Presentation"

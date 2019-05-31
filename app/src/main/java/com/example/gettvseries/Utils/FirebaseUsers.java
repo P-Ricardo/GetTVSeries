@@ -22,7 +22,7 @@ public class FirebaseUsers {
         return userIdentifier;
     }
 
-    public static FirebaseUser gettheCurrentUser(){
+    public static FirebaseUser getCurrentUser(){
 
         FirebaseAuth user = ConfigFirebase.getFirebaseAuthentication();
         return user.getCurrentUser();
@@ -32,7 +32,7 @@ public class FirebaseUsers {
 
         try {
 
-            com.google.firebase.auth.FirebaseUser user = gettheCurrentUser();
+            com.google.firebase.auth.FirebaseUser user = getCurrentUser();
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(nome)
                     .build();
@@ -59,7 +59,7 @@ public class FirebaseUsers {
 
         try {
 
-            com.google.firebase.auth.FirebaseUser user = gettheCurrentUser();
+            com.google.firebase.auth.FirebaseUser user = getCurrentUser();
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setPhotoUri(url)
                     .build();

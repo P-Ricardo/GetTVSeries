@@ -1,6 +1,5 @@
 package com.example.gettvseries.View.Fragments;
 
-
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,14 +35,7 @@ import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UserSettingsFragment extends Fragment {
-
-
-
 
     private ImageButton imageButtonCamera, imageButtonGallery;
     private static final int CAMERA_SELECTION = 100;
@@ -59,22 +51,16 @@ public class UserSettingsFragment extends Fragment {
 
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
-
     };
 
 
-
-
     public UserSettingsFragment() {
-        // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_user_settings, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_user_settings, container, false);
 
         storageReference = ConfigFirebase.getFirebaseStorage();
         userIdentifier = FirebaseUsers.getUseridentifier();
@@ -87,21 +73,18 @@ public class UserSettingsFragment extends Fragment {
 
         Permission.validatePermissions(necessaryPermissions, getActivity(), 1);
 
-
-        FirebaseUser user = FirebaseUsers.gettheCurrentUser();
+        FirebaseUser user = FirebaseUsers.getCurrentUser();
         Uri url = user.getPhotoUrl();
-        if (url != null){
 
+        if (url != null) {
 
-            if (url != null){
-
-                Glide.with(UserSettingsFragment.this)
-                        .load(url)
-                        .into(circleImageView);
-            }
-        }else {
+            Glide.with(UserSettingsFragment.this)
+                    .load(url)
+                    .into(circleImageView);
+        } else {
             circleImageView.setImageResource(R.drawable.standard);
         }
+
         editProfileName.setText(user.getDisplayName());
 
         imageButtonCamera.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +92,18 @@ public class UserSettingsFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getContext().getPackageManager()) != null){
 
-                    startActivityForResult(intent, CAMERA_SELECTION);
+                // Try-catch block added
+
+                try {
+
+                    if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+
+                        startActivityForResult(intent, CAMERA_SELECTION);
+                    }
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -121,15 +113,17 @@ public class UserSettingsFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if(intent.resolveActivity(getContext().getPackageManager()) != null){
 
-                    startActivityForResult(intent, GALLERY_SELECTION);
+                // Try-catch block added
+                try {
+                    if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+                        startActivityForResult(intent, GALLERY_SELECTION);
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
         });
-
-
-
 
         return view;
     }
@@ -140,13 +134,13 @@ public class UserSettingsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if (resultCode == getActivity().RESULT_OK){
+        if (resultCode == getActivity().RESULT_OK) {
 
-            Bitmap image= null;
+            Bitmap image = null;
 
-            try{
+            try {
 
-                switch (requestCode){
+                switch (requestCode) {
 
                     case CAMERA_SELECTION:
 
@@ -155,11 +149,11 @@ public class UserSettingsFragment extends Fragment {
 
                     case GALLERY_SELECTION:
                         Uri localImagemSelecionada = data.getData();
-                        image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), localImagemSelecionada);break;
-
+                        image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), localImagemSelecionada);
+                        break;
                 }
 
-                if (image != null){
+                if (image != null) {
 
                     circleImageView.setImageBitmap(image);
 
@@ -172,14 +166,13 @@ public class UserSettingsFragment extends Fragment {
                             .child("profile")
                             .child(userIdentifier + ".jpeg");
 
-                    UploadTask uploadTask= imagemRef.putBytes(dadosImagem);
+                    UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
 
                     uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
                         public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
 
-                            if (!task.isSuccessful()){
-
+                            if (!task.isSuccessful()) {
 
                                 throw task.getException();
                             }
@@ -189,62 +182,56 @@ public class UserSettingsFragment extends Fragment {
                     }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
+                                Toast.makeText(
+                                        getContext(),
+                                        "Upload Successful",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
 
-
-                                Toast.makeText(getContext(), "Sucesso ao fazer upload da imagem",
-                                        Toast.LENGTH_SHORT).show();
                                 Uri url = task.getResult();
                                 updateUserPicture(url);
 
-                            }
-                            else {
-
-                                Toast.makeText(getContext(), "Erro ao fazer upload da imagem",
-                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(
+                                        getContext(),
+                                        "Upload Error",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         }
                     });
-
-
                 }
-            }catch (Exception e){
 
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-
-
     }
 
-    public void updateUserPicture(Uri url){
-
-
+    public void updateUserPicture(Uri url) {
         FirebaseUsers.updateUserProfilePicture(url);
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        for (int permissionResult : grantResults){
+        for (int permissionResult : grantResults) {
 
-            if (permissionResult == PackageManager.PERMISSION_DENIED){
-
+            if (permissionResult == PackageManager.PERMISSION_DENIED) {
                 permissionValidationAlert();
             }
-
         }
-
     }
-    public void permissionValidationAlert(){
+
+    public void permissionValidationAlert() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Permissões Negadas");
-        builder.setMessage("Para utilizar o app é necessário aceitar as permissões");
+        builder.setTitle(R.string.permission_error);
+        builder.setMessage(R.string.permission_message);
         builder.setCancelable(false);
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.confirm_message, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -253,7 +240,5 @@ public class UserSettingsFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
-
 }

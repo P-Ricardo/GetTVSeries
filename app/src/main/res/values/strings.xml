@@ -35,6 +35,12 @@
 
     <!-- Fragment - User Settings -->
     <string name="username_hint">Username</string>
+    <string name="upload_success">Upload Successful</string>
+    <string name="upload_error">Upload Error</string>
+    <string name="permission_error">Permission Denied</string>
+    <string name="permission_message">To use the app is needed to accept permissions</string>
+    <string name="confirm_message">Confirm</string>
+
 
     <!-- Fragments Title -->
     <string name="txt_popular">Popular</string>
@@ -42,5 +48,7 @@
     <string name="txt_upcoming">Upcoming Movies</string>
     <string name="txt_search_genre">Search by Genre</string>
     <string name="txt_favorites">Favorites</string>
+
+
 
 </resources>

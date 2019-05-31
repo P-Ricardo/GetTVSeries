@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.gettvseries.View.Fragments.MyListFragment;
 import com.example.gettvseries.R;
 import com.example.gettvseries.View.Fragments.SearchFragment;
 import com.example.gettvseries.View.Fragments.UserSettingsFragment;
@@ -36,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView mTextMessage;
-    private HomeFragment homeFragment;
+
     private SearchFragment searchFragment;
     private UserSettingsFragment userSettingsFragment;
-    private MyListFragment myListFragment;
+
     private FirebaseAuth authentication;
 
     private ImageButton imageButtonCamera, imageButtonGallery;
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         authentication = ConfigFirebase.getFirebaseAuthentication();
 
@@ -88,12 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
         Permission.validatePermissions(necessaryPermissions, this, 1);
 
-        homeFragment = new HomeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameContent, homeFragment);
-        transaction.commit();
-
-
+//        homeFragment = new HomeFragment();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frameContent, homeFragment);
+//        transaction.commit();
 
     }
 
