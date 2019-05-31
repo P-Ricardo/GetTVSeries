@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!-- Only one button selected per once -->
+    <group android:checkableBehavior="single">
+
+        <!--- NavigationDrawer items -->
+        <item
+            android:id="@+id/nd_popular"
+            android:icon="@drawable/icon_popular"
+            android:title="@string/n_item_popular" />
+
+        <item
+            android:id="@+id/nd_top_rated"
+            android:icon="@drawable/icon_top_rated"
+            android:title="@string/n_item_top_rated" />
+
+        <item
+            android:id="@+id/nd_upcoming"
+            android:icon="@drawable/icon_upcoming_movies"
+            android:title="@string/n_item_upcoming_movies" />
+
+        <item
+            android:id="@+id/nd_search_genres"
+            android:icon="@drawable/icon_search_by_genre"
+            android:title="@string/n_item_search_by_genre" />
+
+    </group>
+
+    <item android:title="@string/n_title">
+        <menu>
+            <item
+                android:id="@+id/nd_profile"
+                android:icon="@drawable/icon_profile"
+                android:title="@string/n_item_profile" />
+
+            <item
+                android:id="@+id/nd_favorites"
+                android:icon="@drawable/icon_favorites"
+                android:title="@string/n_item_favorites" />
+
+            <item
+                android:id="@+id/nd_logout"
+                android:icon="@drawable/icon_logout"
+                android:title="@string/n_item_logout" />
+        </menu>
+    </item>
+
+</menu>
