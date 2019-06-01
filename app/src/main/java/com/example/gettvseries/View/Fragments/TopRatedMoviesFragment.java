@@ -126,6 +126,4 @@ public class TopRatedMoviesFragment extends Fragment {
 
         currentPage = page;
     }
-
-
 }
