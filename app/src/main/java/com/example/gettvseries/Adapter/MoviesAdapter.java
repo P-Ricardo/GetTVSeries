@@ -16,11 +16,9 @@ import com.example.gettvseries.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-
-
-    public interface OnMovieClickListener{
+    public interface OnMovieClickListener {
         void onClick(View v, int position);
     }
 
@@ -30,7 +28,9 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list,
+                viewGroup,
+                false));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
         Glide
                 .with(viewHolder.itemView)
-                .load(Constant.IMAGE_URL+m.getPosterPath())
+                .load(Constant.IMAGE_URL + m.getPosterPath())
                 .into(viewHolder.imagePoster);
         viewHolder.bindClick(i);
     }
@@ -57,14 +57,14 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
         this.onMovieClickListener = onMovieClickListener;
     }
+
     public void insertMovies(List<Movie> movies) {
         int size = this.movies.size();
         this.movies.addAll(movies);
         notifyItemRangeInserted(size, this.movies.size());
     }
 
-
-    public class ViewHolder extends  RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagePoster;
         private TextView title;
@@ -79,11 +79,11 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
             year = itemView.findViewById(R.id.movie_year);
         }
 
-        void bindClick(final int position){
+        void bindClick(final int position) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(onMovieClickListener!=null){
+                    if (onMovieClickListener != null) {
                         onMovieClickListener.onClick(itemView, position);
                     }
                 }

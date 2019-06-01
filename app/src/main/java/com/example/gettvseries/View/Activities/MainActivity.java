@@ -20,7 +20,10 @@ import android.widget.TextView;
 
 import com.example.gettvseries.R;
 import com.example.gettvseries.View.Fragments.PopularMoviesFragment;
+import com.example.gettvseries.View.Fragments.SearchByGenreFragment;
 import com.example.gettvseries.View.Fragments.SearchFragment;
+import com.example.gettvseries.View.Fragments.TopRatedMoviesFragment;
+import com.example.gettvseries.View.Fragments.UpcomingMoviesFragment;
 import com.example.gettvseries.View.Fragments.UserSettingsFragment;
 import com.example.gettvseries.Firebase.ConfigFirebase;
 import com.example.gettvseries.Utils.Permission;
@@ -152,8 +155,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()){
 
             case R.id.nd_popular:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, PopularMoviesFragment.newInstance()).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, PopularMoviesFragment.newInstance())
+                        .commit();
                 break;
+
+            case R.id.nd_top_rated:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, TopRatedMoviesFragment.newInstance())
+                        .commit();
+                break;
+
+            case R.id.nd_upcoming:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, UpcomingMoviesFragment.newInstance())
+                        .commit();
+                break;
+//
+//            case R.id.nd_search_genres:
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.fragment_container, SearchByGenreFragment.newInstance())
+//                        .commit();
+//                break;
+
+                /***
+                 * falta por o resto
+                 **/
+
+//            case R.id.nd_logout:
+//                break;
+
+
 
         }
 

@@ -23,7 +23,7 @@ public interface Service {
             @Query("page") int pageIndex
     );
 
-    @GET("/movie/upcoming")
+    @GET("movie/upcoming")
     Call<MovieResponse> getUpcoming(
             @Query("api_key") String apiKey,
             @Query("language") String language,
