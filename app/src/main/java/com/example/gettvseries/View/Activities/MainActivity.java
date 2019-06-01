@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private StorageReference storageReference;
     private String userIdentifier;
     private EditText editProfileName;
+    private PopularMoviesFragment popularMoviesFragment;
 
     private String[] necessaryPermissions = new String[]{
 
@@ -96,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Permission.validatePermissions(necessaryPermissions, this, 1);
 
-//        homeFragment = new HomeFragment();
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frameContent, homeFragment);
-//        transaction.commit();
+        popularMoviesFragment = new PopularMoviesFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, popularMoviesFragment);
+        transaction.commit();
 
     }
 
