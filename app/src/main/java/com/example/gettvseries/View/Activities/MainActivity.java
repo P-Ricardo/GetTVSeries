@@ -2,7 +2,9 @@ package com.example.gettvseries.View.Activities;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.gettvseries.R;
+import com.example.gettvseries.View.Fragments.PopularMoviesFragment;
 import com.example.gettvseries.View.Fragments.SearchFragment;
 import com.example.gettvseries.View.Fragments.UserSettingsFragment;
 import com.example.gettvseries.Firebase.ConfigFirebase;
@@ -26,7 +29,7 @@ import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // NavDrawer
     private DrawerLayout drawerLayout;
@@ -66,22 +69,25 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
+
+
         toggle.syncState();
 
 
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+//        BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
 //        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         authentication = ConfigFirebase.getFirebaseAuthentication();
 
 
-        Toolbar toolbar = findViewById(R.id.mainToolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("GetTVSeries()");
         setSupportActionBar(toolbar);
 
@@ -140,4 +146,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()){
+
+            case R.id.nd_popular:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, PopularMoviesFragment.newInstance()).commit();
+                break;
+
+        }
+
+        return true;
+    }
 }

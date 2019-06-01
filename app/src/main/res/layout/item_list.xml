@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:scaleType="centerCrop"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movie_poster"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/movie_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.38"
+            android:gravity="end"
+            android:maxLines="1"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="29dp"
+            tools:text="2009 | EN" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            tools:text="Marvel"
+            android:id="@+id/movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/TextAppearance.AppCompat.Subhead" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/movie_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            style="@style/TextAppearance.AppCompat.Caption"
+            tools:text="Nowadays,asdasdasdasdasdasdasdasd user engagement is considered one of the most important metrics for the success of your app" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

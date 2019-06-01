@@ -10,7 +10,6 @@ public class PaginationScrollListener extends RecyclerView.OnScrollListener {
         void loadMoreItems();
     }
 
-
     private boolean mIsScrolling;
     private LinearLayoutManager mLayoutManager;
     private PaginationScrollListener.OnScrollListener mListener;
