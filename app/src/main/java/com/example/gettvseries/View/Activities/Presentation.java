@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.gettvseries.Firebase.ConfigFirebase;
 import com.example.gettvseries.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
 public class Presentation extends IntroActivity {
 
+    FirebaseAuth authentication;
 
     public Presentation() {
     }
@@ -47,5 +51,19 @@ public class Presentation extends IntroActivity {
     public void openLogin(View view){
 
         startActivity(new Intent(Presentation.this, LoginActivity.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        authentication = ConfigFirebase.getFirebaseAuthentication();
+        FirebaseUser currentUser = authentication.getCurrentUser();
+
+        if (currentUser != null){
+
+            startActivity(new Intent(Presentation.this, MainActivity.class));
+        }
+
     }
 }

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="80dp"
+    >
 
-    <Button
-        android:id="@+id/btn_genre"
+
+    <TextView
+        android:id="@+id/txt_bnt_genre"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="12sp"
+        android:layout_margin="5dp"
         android:background="@drawable/round_shape_genre"
-        android:text="Action"
+        android:text="ACTION"
+        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/colorTitleBackground"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
 
-</android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

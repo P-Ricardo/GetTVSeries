@@ -29,8 +29,9 @@
 
     </group>
 
-    <item android:title="@string/n_title">
-        <menu>
+    <group android:title="@string/n_title"
+        android:checkableBehavior="single">
+        <menu android:title="@string/n_title">
             <item
                 android:id="@+id/nd_profile"
                 android:icon="@drawable/icon_profile"
@@ -46,6 +47,6 @@
                 android:icon="@drawable/icon_logout"
                 android:title="@string/n_item_logout" />
         </menu>
-    </item>
+    </group>
 
 </menu>
