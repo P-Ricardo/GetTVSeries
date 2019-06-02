@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".View.Activities.SearchActivity" android:parentActivityName=".View.Activities.MainActivity"></activity>
         <activity android:name=".View.Activities.RegisterActivity" />
         <activity android:name=".View.Activities.MainActivity" />
         <activity android:name=".View.Activities.LoginActivity" />

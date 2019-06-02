@@ -2,6 +2,7 @@ package com.example.gettvseries.View.Activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -176,7 +177,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()){
 
-
+            case R.id.menu_search:
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                break;
             case R.id.menuLogout:
 
                 //logout();
