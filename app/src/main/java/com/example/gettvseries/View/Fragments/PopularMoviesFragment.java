@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.gettvseries.Adapter.PaginationScrollListener;
@@ -33,6 +34,7 @@ public class PopularMoviesFragment extends Fragment {
     private RecyclerView recyclerView;
     private int currentPage = 1;
     private MoviesAdapter adapter;
+    private ProgressBar progressBar;
 
     public PopularMoviesFragment() {
         // Requires empty public constructor
@@ -51,6 +53,7 @@ public class PopularMoviesFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_popular, container, false);
         adapter = new MoviesAdapter();
+        progressBar = view.findViewById(R.id.progress_pop);
 
         return view;
     }
@@ -107,7 +110,7 @@ public class PopularMoviesFragment extends Fragment {
                     List<Movie> movies = response.body().getResults();
                     if (movies != null){
 
-                        // hide progress bar
+                        progressBar.setVisibility(View.GONE);
                         adapter.insertMovies(movies);
                     }
                     else

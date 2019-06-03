@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     android:theme="@style/LoginTheme"
-    tools:context=".View.Activities.RegisterActivity">
+    tools:context=".View.Activities.RegisterActivity"
+    android:id="@+id/layout_register">
 
     <ImageView
         android:id="@+id/imageView5"

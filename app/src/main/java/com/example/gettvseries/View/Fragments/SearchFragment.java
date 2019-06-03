@@ -3,8 +3,8 @@ package com.example.gettvseries.View.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.gettvseries.Adapter.MoviesAdapter;
 import com.example.gettvseries.Adapter.PaginationScrollListener;
@@ -33,14 +31,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
 
     private View view;
     private RecyclerView recyclerView;
     private int currentPage = 1;
     private MoviesAdapter adapter;
-    private TextInputEditText inputSearch;
-    private StringBuilder input = new StringBuilder();
+    private SearchView inputSearch;
+    private ProgressBar progressBar;
+    private AppCompatTextView helper;
+    private SearchView search;
 
     public SearchFragment() {
         // Requires empty public constructor
@@ -56,8 +56,11 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_search, container, false);
-        inputSearch = view.findViewById(R.id.input_search);
+//        inputSearch = view.findViewById(R.id.input_search);
         adapter = new MoviesAdapter();
+
+        progressBar = view.findViewById(R.id.progress);
+        helper = view.findViewById(R.id.movie_helper);
 
         return view;
     }
@@ -79,6 +82,7 @@ public class SearchFragment extends Fragment {
         );
 
         recyclerView.setLayoutManager(linearLayoutManager);
+
         recyclerView.addOnScrollListener(new PaginationScrollListener(
                 linearLayoutManager, new PaginationScrollListener.OnScrollListener() {
             @Override
@@ -102,13 +106,11 @@ public class SearchFragment extends Fragment {
 
     private void incrementPage(int page) {
 
-        input.setLength(0);
-        input.append(inputSearch.getText() != null ? inputSearch.getText().toString() : "");
 
         RetrofitConfig.getService().getMovieSearch(
                 Constant.API_KEY,
                 Constant.LANGUAGE,
-                inputSearch.getText().toString(),
+                "",
                 false,
                 page)
                 .enqueue(new Callback<MovieResponse>() {
@@ -121,7 +123,7 @@ public class SearchFragment extends Fragment {
                     List<Movie> movies = response.body().getResults();
                     if (movies != null){
 
-                        // hide progress bar
+                        progressBar.setVisibility(View.GONE);
                         adapter.insertMovies(movies);
                     }
                     else
@@ -141,4 +143,46 @@ public class SearchFragment extends Fragment {
 
         currentPage = page;
     }
+
+//    private void bindSearchView() {
+//        mSearchView.setHint("Search for movies here");
+//        mSearchView.setOnTextChangeListener(new SearchView.OnTextChangeListener() {
+//
+//            @Override
+//            public void onSuggestion(String suggestion) {
+//
+//                adapter.clear();
+//                changeSearchText(suggestion);
+//                mMessageHelper.setVisibility(View.GONE);
+//                mList.setVisibility(View.VISIBLE);
+//
+//                Log.d("tag", "onSuggestion: ");
+//            }
+//
+//            @Override
+//            public void onSubmitted(String submitted) {
+//
+//            }
+//
+//            @Override
+//            public void onCleared() {
+//
+//                mAdapter.clear();
+//                mAdapter.notifyDataSetChanged();
+//                mViewModel.setQuery("");
+//                mProgress.setVisibility(View.GONE);
+//                mList.setVisibility(View.GONE);
+//                mMessageHelper.setText(R.string.text_help);
+//                mMessageHelper.setVisibility(View.VISIBLE);
+//
+//            }
+//        });
+//    }
+//
+//    private void changeSearchText(String s) {
+//        mProgress.setVisibility(View.VISIBLE);
+//        mViewModel.setQuery(s);
+//
+//    }
+
 }

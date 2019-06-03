@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.gettvseries.Adapter.GenresAdapter;
@@ -35,6 +36,7 @@ public class SearchByGenreFragment extends Fragment {
     private View view;
     private RecyclerView recyclerView;
     private GenresAdapter adapter;
+    private ProgressBar progressBar;
 
     public SearchByGenreFragment() {
     }
@@ -49,6 +51,7 @@ public class SearchByGenreFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_search_by_genre, container, false);
         adapter = new GenresAdapter();
+        progressBar = view.findViewById(R.id.progress_genres);
 
         return view;
 
@@ -93,7 +96,7 @@ public class SearchByGenreFragment extends Fragment {
 
                             if (genres != null){
 
-
+                                progressBar.setVisibility(View.GONE);
                                 adapter.insertGenres(genres);
                             }
                             else

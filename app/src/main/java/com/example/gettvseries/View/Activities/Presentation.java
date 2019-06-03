@@ -55,7 +55,10 @@ public class Presentation extends IntroActivity {
 
     public void openLogin(View view){
 
+        view.setClickable(false);
+        view.setFocusable(false);
         startActivity(new Intent(Presentation.this, LoginActivity.class));
+        finish();
     }
 
     @Override

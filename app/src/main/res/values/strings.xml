@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">GetMovies( )</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <!-- NavigationDrawer -->
     <string name="n_item_popular">Popular</string>
@@ -14,7 +11,6 @@
     <string name="n_item_favorites">Favorites</string>
     <string name="n_item_logout">Logout</string>
 
-    <string name="n_title">User Section</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -33,12 +29,10 @@
     <string name="bt_register">Register</string>
 
     <!-- Fragment - Search -->
-    <string name="search_hint">Search</string>
+    <string name="search">Search</string>
 
     <!-- Fragment - User Settings -->
     <string name="username_hint">Username</string>
-    <string name="upload_success">Upload Successful</string>
-    <string name="upload_error">Upload Error</string>
     <string name="permission_error">Permission Denied</string>
     <string name="permission_message">To use the app is needed to accept permissions</string>
     <string name="confirm_message">Confirm</string>
@@ -49,7 +43,6 @@
     <string name="txt_top_rated">Top Rated</string>
     <string name="txt_upcoming">Upcoming Movies</string>
     <string name="txt_search_genre">Search by Genre</string>
-    <string name="txt_favorites">Favorites</string>
 
     <!-- Intros -->
     <!-- 1 -->

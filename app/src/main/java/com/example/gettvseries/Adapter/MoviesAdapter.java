@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,13 +18,14 @@ import com.example.gettvseries.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> implements Filterable {
 
     public interface OnMovieClickListener {
         void onClick(View v, int position);
     }
 
     private List<Movie> movies = new ArrayList<>();
+    private List<Movie> filteredMovies;
     private OnMovieClickListener onMovieClickListener;
 
     @NonNull
@@ -90,4 +93,46 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             });
         }
     }
+
+    public void clear(){
+        this.movies.clear();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Movie> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(movies);
+            } else {
+                StringBuilder filterPattern = new StringBuilder(constraint.toString().toLowerCase().trim());
+
+                for (Movie movie : movies) {
+                    if (movie.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(movie);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredMovies.clear();
+            filteredMovies.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
