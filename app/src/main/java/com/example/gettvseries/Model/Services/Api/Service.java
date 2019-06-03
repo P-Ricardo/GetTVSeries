@@ -31,8 +31,26 @@ public interface Service {
     );
 
     @GET("genre/movie/list")
-    Call<GenreResponse> getBGenres(
-            @Query("api_key")String api_key,
+    Call<GenreResponse> getGenres(
+            @Query("api_key")String apiKey,
             @Query("language") String language
     );
+
+    @GET("discover/movie")
+    Call<MovieResponse> getMoviesByGenre(
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("sort_by") String sortBy,
+            @Query("with_genres") String genreId
+    );
+
+    @GET("search/movie")
+    Call<MovieResponse> getMovieSearch(
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("query") String query,
+            @Query("include_adult") boolean adult,
+            @Query("page") int page
+    );
+
 }

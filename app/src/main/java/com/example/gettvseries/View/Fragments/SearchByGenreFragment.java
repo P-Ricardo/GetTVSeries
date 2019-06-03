@@ -80,7 +80,7 @@ public class SearchByGenreFragment extends Fragment {
     public void getGenres(){
 
 
-        RetrofitConfig.getService().getBGenres(
+        RetrofitConfig.getService().getGenres(
                 Constant.API_KEY,
                 Constant.LANGUAGE)
                 .enqueue(new Callback<GenreResponse>() {
