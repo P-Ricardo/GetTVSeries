@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GetTvSeries( )</string>
+    <string name="app_name">GetMovies( )</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -17,6 +17,8 @@
     <string name="n_title">User Section</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="txt_email">user@email.com</string>
 
     <!-- Activity - Login -->
     <string name="login_hint">Enter your email</string>
@@ -50,9 +52,26 @@
     <string name="txt_favorites">Favorites</string>
 
     <!-- Intros -->
-
     <!-- 1 -->
     <string name="txt_welcome">Welcome to GetMovies( )</string>
+    <!-- 2 -->
+    <string name="txt_find">Find your favorite movies</string>
+    <string name="txt_find2">Find information about popular, top rated\n and upcoming movies</string>
+    <!-- 3 -->
+    <string name="txt_create">Create your own list</string>
+    <string name="txt_create2">Create a list with your favorite\n and expected movies</string>
+    <!-- 4 -->
+    <string name="txt_get_started">Get Started</string>
+
+    <!-- Toolbar -->
+    <string name="search_title">Search</string>
+
+
+    <!-- Application -->
+    <string name="exit_app">Exit GetMovies()?</string>
+    <string name="exit_message">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
 </resources>

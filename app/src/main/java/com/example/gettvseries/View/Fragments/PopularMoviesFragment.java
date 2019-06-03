@@ -68,7 +68,8 @@ public class PopularMoviesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getContext(),
                 RecyclerView.VERTICAL,
-                false);
+                false
+        );
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addOnScrollListener(new PaginationScrollListener(

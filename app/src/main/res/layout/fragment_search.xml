@@ -23,9 +23,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_hint" />
+
     </android.support.design.widget.TextInputLayout>
 
     <ScrollView
@@ -40,8 +42,10 @@
 
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </ScrollView>
 
 

@@ -2,8 +2,10 @@ package com.example.gettvseries.View.Activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,39 +96,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-
-        toggle.syncState();*/
-
-
         circle_profile_image = navigationView.getHeaderView(0).findViewById(R.id.nav_circle_profile_image);
         textProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
         textProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
         user = FirebaseUsers.getCurrentUser();
         Uri url = user.getPhotoUrl();
+
         if (url != null) {
 
-        Glide.with(getApplicationContext())
+            Glide.with(getApplicationContext())
                     .load(url)
                     .into(circle_profile_image);
         } else {
             circle_profile_image.setImageResource(R.drawable.standard);
         }
+
         textProfileName.setText(user.getDisplayName());
         textProfileEmail.setText(user.getEmail());
 
-
-//        BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
-//        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         authentication = ConfigFirebase.getFirebaseAuthentication();
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("GetTVSeries()");
+        toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
         Permission.validatePermissions(necessaryPermissions, this, 1);
@@ -143,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -164,7 +155,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(R.string.exit_app);
+            alertDialogBuilder
+                    .setMessage(R.string.exit_message)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.yes,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    moveTaskToBack(true);
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                    System.exit(1);
+                                }
+                            })
+
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
     }
 
@@ -180,44 +192,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-
-            case R.id.menu_search:
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                break;
-            case R.id.menuLogout:
-
-                //logout();
-                finish();
-                break;
-
+        // colocar progress bar
+        if (item.getItemId() == R.id.menu_search) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, SearchFragment.newInstance())
+                    .commit();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void logout(){
+    public void logout() {
 
         try {
             authentication.signOut();
-        }catch (Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()){
+        if (menuItem.getItemId() == R.id.nd_logout) {
+            logout();
+            finish();
+        }
+
+        switch (menuItem.getItemId()) {
 
             case R.id.nd_popular:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, PopularMoviesFragment.newInstance())
                         .commit();
-                drawerLayout.closeDrawers();
                 break;
 
             case R.id.nd_top_rated:
@@ -225,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .beginTransaction()
                         .replace(R.id.fragment_container, TopRatedMoviesFragment.newInstance())
                         .commit();
-                drawerLayout.closeDrawers();
                 break;
 
             case R.id.nd_upcoming:
@@ -233,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .beginTransaction()
                         .replace(R.id.fragment_container, UpcomingMoviesFragment.newInstance())
                         .commit();
-                drawerLayout.closeDrawers();
                 break;
 
             case R.id.nd_search_genres:
@@ -241,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .beginTransaction()
                         .replace(R.id.fragment_container, SearchByGenreFragment.newInstance())
                         .commit();
-                drawerLayout.closeDrawers();
                 break;
 
             case R.id.nd_profile:
@@ -249,24 +255,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 userSettingsFragment = new UserSettingsFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, userSettingsFragment )
+                        .replace(R.id.fragment_container, userSettingsFragment)
                         .commit();
-                drawerLayout.closeDrawers();
-                //Toast.makeText(MainActivity.this,"Item selected", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nd_favorites:
-                drawerLayout.closeDrawers();
-                Toast.makeText(MainActivity.this,"Item selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Item selected", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.nd_logout:
-
-                logout();
-                finish();
-                break;
-
         }
+
+        drawerLayout.closeDrawers();
 
         return true;
     }
+
 }

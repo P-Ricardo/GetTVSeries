@@ -19,11 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".View.Activities.SearchActivity"
-            android:parentActivityName=".View.Activities.MainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
         <activity android:name=".View.Activities.RegisterActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
