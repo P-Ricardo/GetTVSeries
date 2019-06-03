@@ -1,6 +1,8 @@
 package com.example.gettvseries.View.Activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -60,15 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FirebaseAuth authentication;
 
-    private ImageButton imageButtonCamera, imageButtonGallery;
-    private static final int CAMERA_SELECTION = 100;
-    private static final int GALLERY_SELECTION = 200;
     private CircleImageView circle_profile_image;
     private StorageReference storageReference;
     private String userIdentifier;
     private TextView textProfileName;
+    private TextView textProfileEmail;
     private PopularMoviesFragment popularMoviesFragment;
     private FirebaseUser user;
+    private View mview;
 
     private String[] necessaryPermissions = new String[]{
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Manifest.permission.CAMERA
 
     };
+
 
 
     @Override
@@ -99,9 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toggle.syncState();*/
 
-        /*
-        circle_profile_image = findViewById(R.id.nav_circle_profile_image);
-        textProfileName = findViewById(R.id.nav_user_name);
+
+        circle_profile_image = navigationView.getHeaderView(0).findViewById(R.id.nav_circle_profile_image);
+        textProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
+        textProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
         user = FirebaseUsers.getCurrentUser();
         Uri url = user.getPhotoUrl();
         if (url != null) {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             circle_profile_image.setImageResource(R.drawable.standard);
         }
         textProfileName.setText(user.getDisplayName());
-        */
+        textProfileEmail.setText(user.getEmail());
 
 
 //        BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -140,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
+
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);

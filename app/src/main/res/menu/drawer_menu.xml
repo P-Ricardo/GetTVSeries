@@ -29,24 +29,28 @@
 
     </group>
 
-    <group android:title="@string/n_title"
-        android:checkableBehavior="single">
-        <menu android:title="@string/n_title">
-            <item
-                android:id="@+id/nd_profile"
-                android:icon="@drawable/icon_profile"
-                android:title="@string/n_item_profile" />
+    <item android:title="User Section">
 
-            <item
-                android:id="@+id/nd_favorites"
-                android:icon="@drawable/icon_favorites"
-                android:title="@string/n_item_favorites" />
+        <menu>
+            <group
+                android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/nd_logout"
-                android:icon="@drawable/icon_logout"
-                android:title="@string/n_item_logout" />
+                <item
+                    android:id="@+id/nd_profile"
+                    android:icon="@drawable/icon_profile"
+                    android:title="@string/n_item_profile" />
+
+                <item
+                    android:id="@+id/nd_favorites"
+                    android:icon="@drawable/icon_favorites"
+                    android:title="@string/n_item_favorites" />
+
+                <item
+                    android:id="@+id/nd_logout"
+                    android:icon="@drawable/icon_logout"
+                    android:title="@string/n_item_logout" />
+            </group>
         </menu>
-    </group>
+    </item>
 
 </menu>
