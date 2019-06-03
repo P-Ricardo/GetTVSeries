@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.gettvseries.R;
@@ -22,17 +23,21 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText editName, editEmail,editPassword;
+    private TextInputEditText editName, editEmail,editPassword,editConfirmPassword;
     private FirebaseAuth authentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         editName = findViewById(R.id.editRegisterName);
         editEmail = findViewById(R.id.editRegisterEmail);
         editPassword = findViewById(R.id.editRegisterPassword);
+        editConfirmPassword = findViewById(R.id.edit_Confirm_Password);
     }
     public void registerUser(final User user){
 
@@ -93,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
         String textName = editName.getText().toString();
         String textEmail = editEmail.getText().toString();
         String textPassword = editPassword.getText().toString();
+        String textConfirmPasswrod = editConfirmPassword.getText().toString();
 
         if (!textName.isEmpty()){
 
@@ -100,12 +106,24 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (!textPassword.isEmpty()){
 
-                    User user = new User();
-                    user.setName(textName);
-                    user.setEmail(textEmail);
-                    user.setPassword(textPassword);
-                    registerUser(user);
+                    if (!textConfirmPasswrod.isEmpty()){
 
+                        if (textConfirmPasswrod.equals(textPassword)){
+
+                            User user = new User();
+                            user.setName(textName);
+                            user.setEmail(textEmail);
+                            user.setPassword(textPassword);
+                            registerUser(user);
+
+                        }else{
+
+                            Toast.makeText(RegisterActivity.this, "The passwords do not match", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+
+                        Toast.makeText(RegisterActivity.this, "Fill the second password field", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
 
                     Toast.makeText(RegisterActivity.this, "Fill the password field", Toast.LENGTH_SHORT).show();

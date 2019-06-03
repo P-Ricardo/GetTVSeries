@@ -3,6 +3,7 @@ package com.example.gettvseries.View.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.gettvseries.Firebase.ConfigFirebase;
 import com.example.gettvseries.R;
@@ -20,29 +21,33 @@ public class Presentation extends IntroActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
+
 
         setButtonBackVisible(false);
         setButtonNextVisible(false);
 
         addSlide(new FragmentSlide.Builder()
 
-                .background(android.R.color.white)
+                .background(R.color.colorAccent)
                 .fragment(R.layout.intro_1)
                 .build());
         addSlide(new FragmentSlide.Builder()
 
-                .background(android.R.color.white)
+                .background(R.color.colorAccent)
                 .fragment(R.layout.intro_2)
                 .build());
         addSlide(new FragmentSlide.Builder()
 
-                .background(android.R.color.white)
+                .background(R.color.colorAccent)
                 .fragment(R.layout.intro_3)
                 .build());
         addSlide(new FragmentSlide.Builder()
 
-                .background(android.R.color.white)
+                .background(R.color.colorAccent)
                 .fragment(R.layout.intro_4)
                 .canGoForward(false)
                 .build());
