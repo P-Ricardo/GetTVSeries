@@ -3,6 +3,7 @@ package com.example.gettvseries.View.Activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PopularMoviesFragment popularMoviesFragment;
     private FirebaseUser user;
     private View mview;
+    private NavigationView navigationView;
 
     private String[] necessaryPermissions = new String[]{
 
@@ -83,11 +86,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView.setCheckedItem(R.id.nd_popular);
 
+        navigationView.getHeaderView(0).findViewById(R.id.header_drawer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserSettingsActivity.class));
+            }
+        });
         circle_profile_image = navigationView.getHeaderView(0).findViewById(R.id.nav_circle_profile_image);
         textProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_user_name);
         textProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_user_email);
@@ -148,70 +157,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
 //            super.onBackPressed();
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(R.string.exit_app);
-            alertDialogBuilder
-                    .setMessage(R.string.exit_message)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.yes,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    moveTaskToBack(true);
-                                    android.os.Process.killProcess(android.os.Process.myPid());
-                                    System.exit(1);
-                                }
-                            })
+            if(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size()-1)
+                    instanceof PopularMoviesFragment) {
+               AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+               alertDialogBuilder.setTitle(R.string.exit_app);
+               alertDialogBuilder
+                       .setMessage(R.string.exit_message)
+                       .setCancelable(false)
+                       .setPositiveButton(R.string.yes,
+                               new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog, int id) {
+                                       moveTaskToBack(true);
+                                       android.os.Process.killProcess(android.os.Process.myPid());
+                                       System.exit(1);
+                                   }
+                               })
 
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+                       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                           public void onClick(DialogInterface dialog, int id) {
+                               dialog.cancel();
+                           }
+                       });
+               AlertDialog alertDialog = alertDialogBuilder.create();
+               alertDialog.show();
+           }else{
+
+               getSupportFragmentManager()
+                       .beginTransaction()
+                       .replace(R.id.fragment_container,PopularMoviesFragment.newInstance())
+                       .commit();
+                navigationView.setCheckedItem(R.id.nd_popular);
+           }
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_menu_options, menu);
-
-//        MenuItem searchItem = menu.findItem(R.id.menu_search);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.menu_search) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, SearchFragment.newInstance())
-                    .commit();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void logout() {
 
         try {
@@ -229,49 +207,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
+        Fragment fragment = new Fragment();
+
         switch (menuItem.getItemId()) {
 
             case R.id.nd_popular:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, PopularMoviesFragment.newInstance())
-                        .commit();
+                fragment = PopularMoviesFragment.newInstance();
+
                 break;
 
             case R.id.nd_top_rated:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, TopRatedMoviesFragment.newInstance())
-                        .commit();
+                fragment = TopRatedMoviesFragment.newInstance();
+
                 break;
 
             case R.id.nd_upcoming:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, UpcomingMoviesFragment.newInstance())
-                        .commit();
+                fragment = UpcomingMoviesFragment.newInstance();
                 break;
 
             case R.id.nd_search_genres:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, SearchByGenreFragment.newInstance())
-                        .commit();
+                fragment = SearchByGenreFragment.newInstance();
                 break;
 
-            case R.id.nd_profile:
+            case R.id.nd_search:
 
-                userSettingsFragment = new UserSettingsFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, userSettingsFragment)
-                        .commit();
+                fragment = new SearchFragment();
                 break;
 
             case R.id.nd_favorites:
                 Toast.makeText(MainActivity.this, "Item selected", Toast.LENGTH_SHORT).show();
                 break;
         }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
         drawerLayout.closeDrawers();
 

@@ -27,6 +27,11 @@
             android:icon="@drawable/icon_search_by_genre"
             android:title="@string/n_item_search_by_genre" />
 
+        <item
+            android:id="@+id/nd_search"
+            android:icon="@drawable/icon_search"
+            android:title="@string/search" />
+
     </group>
 
     <item android:title="User Section">
@@ -34,11 +39,6 @@
         <menu>
             <group
                 android:checkableBehavior="single">
-
-                <item
-                    android:id="@+id/nd_profile"
-                    android:icon="@drawable/icon_profile"
-                    android:title="@string/n_item_profile" />
 
                 <item
                     android:id="@+id/nd_favorites"

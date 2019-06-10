@@ -99,7 +99,7 @@ public class SearchView extends FrameLayout {
             txtSearch.setHint(txtHint);
         }
 
-        Drawable drawableClear = getResources().getDrawable(R.drawable.ic_close_black_24dp);
+        Drawable drawableClear = getResources().getDrawable(R.drawable.ic_close_white_24dp);
         drawableClear.setColorFilter(drawableColor, PorterDuff.Mode.SRC_IN);
         btnClear.setImageDrawable(drawableClear);
 

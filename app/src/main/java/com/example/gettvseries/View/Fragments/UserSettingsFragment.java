@@ -1,6 +1,7 @@
 package com.example.gettvseries.View.Fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,9 +9,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +30,14 @@ import com.example.gettvseries.Utils.Permission;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,9 +58,14 @@ public class UserSettingsFragment extends Fragment {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private FloatingActionButton fab;
 
 
     public UserSettingsFragment() {
+    }
+
+    public static UserSettingsFragment newInstance() {
+        return new UserSettingsFragment();
     }
 
     @Override
@@ -70,6 +81,7 @@ public class UserSettingsFragment extends Fragment {
         imageButtonGallery = view.findViewById(R.id.imageButtonGallery);
         circleImageView = view.findViewById(R.id.circleImageView);
         editProfileName = view.findViewById(R.id.editProfileName);
+        fab = view.findViewById(R.id.fab);
 
         Permission.validatePermissions(necessaryPermissions, getActivity(), 1);
 
@@ -86,6 +98,7 @@ public class UserSettingsFragment extends Fragment {
         }
 
         editProfileName.setText(user.getDisplayName());
+        editProfileName.setSelection((user.getDisplayName() != null) ? user.getDisplayName().length() : 0);
 
         imageButtonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +134,21 @@ public class UserSettingsFragment extends Fragment {
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editProfileName.isEnabled()) {
+                    editProfileName.setEnabled(false);
+                    fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_edit_white_24dp));
+                    //salvar aqui
+                } else {
+                    editProfileName.setEnabled(true);
+                    editProfileName.requestFocus();
+                    fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_save_white_24dp));
                 }
             }
         });
