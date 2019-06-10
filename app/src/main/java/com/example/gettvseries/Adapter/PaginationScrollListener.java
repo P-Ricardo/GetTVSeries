@@ -1,7 +1,7 @@
 package com.example.gettvseries.Adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
