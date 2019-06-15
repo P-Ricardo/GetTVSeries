@@ -1,22 +1,23 @@
 package com.example.gettvseries.View.Activities;
 
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
+import com.example.gettvseries.Model.Entity.User;
 import com.example.gettvseries.R;
-import com.example.gettvseries.Firebase.ConfigFirebase;
 import com.example.gettvseries.Utils.Base64Custom;
 import com.example.gettvseries.Utils.FirebaseUsers;
-import com.example.gettvseries.Model.Entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerUser(final User user) {
 
-        authentication = ConfigFirebase.getFirebaseAuthentication();
+        authentication = ConfigurationFirebase.getFirebaseAuthentication();
         authentication.createUserWithEmailAndPassword(
 
                 user.getEmail(), user.getPassword()

@@ -1,17 +1,18 @@
 package com.example.gettvseries.View.Fragments;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gettvseries.Adapter.GenresAdapter;
 import com.example.gettvseries.Model.Entity.Genre;
@@ -33,6 +34,7 @@ public class SearchByGenreFragment extends Fragment {
     private RecyclerView recyclerView;
     private GenresAdapter adapter;
     private ProgressBar progressBar;
+    private MovieGenreFragment genreFragment;
 
     public SearchByGenreFragment() {
     }
@@ -45,7 +47,7 @@ public class SearchByGenreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        view = inflater.inflate(R.layout.fragment_search_by_genre, container, false);
+        view = inflater.inflate(R.layout.fragment_genre_search, container, false);
         adapter = new GenresAdapter();
         progressBar = view.findViewById(R.id.progress_genres);
 
@@ -68,7 +70,9 @@ public class SearchByGenreFragment extends Fragment {
         adapter.setOnGenreClickListener(new GenresAdapter.OnGenreClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("TAG", "Movie CLicked :" + (position + 1));
+
+//                adapter.get
+
             }
         });
         getGenres();
@@ -76,7 +80,7 @@ public class SearchByGenreFragment extends Fragment {
 
     }
 
-    public void getGenres(){
+    private void getGenres(){
 
 
         RetrofitConfig.getService().getGenres(

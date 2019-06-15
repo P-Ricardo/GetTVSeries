@@ -1,10 +1,6 @@
 package com.example.gettvseries.View.Activities;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,11 +8,16 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.gettvseries.R;
-import com.example.gettvseries.Firebase.ConfigFirebase;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.example.gettvseries.Model.Entity.User;
+import com.example.gettvseries.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        authentication = ConfigFirebase.getFirebaseAuthentication();
+        authentication = ConfigurationFirebase.getFirebaseAuthentication();
         editEmail = findViewById(R.id.editLoginEmail);
         editPassword = findViewById(R.id.editLoginPassword);
         progressBar = findViewById(R.id.progress_login);

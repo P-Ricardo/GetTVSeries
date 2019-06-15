@@ -7,37 +7,33 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.example.gettvseries.R;
 import com.example.gettvseries.Utils.FirebaseUsers;
+import com.example.gettvseries.Utils.Permission;
+import com.example.gettvseries.View.Fragments.FavoritesFragment;
 import com.example.gettvseries.View.Fragments.PopularMoviesFragment;
 import com.example.gettvseries.View.Fragments.SearchByGenreFragment;
 import com.example.gettvseries.View.Fragments.SearchFragment;
 import com.example.gettvseries.View.Fragments.TopRatedMoviesFragment;
 import com.example.gettvseries.View.Fragments.UpcomingMoviesFragment;
 import com.example.gettvseries.View.Fragments.UserSettingsFragment;
-import com.example.gettvseries.Firebase.ConfigFirebase;
-import com.example.gettvseries.Utils.Permission;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
@@ -117,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mTextMessage = findViewById(R.id.message);
 
-        authentication = ConfigFirebase.getFirebaseAuthentication();
+        authentication = ConfigurationFirebase.getFirebaseAuthentication();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -157,39 +153,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
 //            super.onBackPressed();
-            if(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size()-1)
+            if (getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)
                     instanceof PopularMoviesFragment) {
-               AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-               alertDialogBuilder.setTitle(R.string.exit_app);
-               alertDialogBuilder
-                       .setMessage(R.string.exit_message)
-                       .setCancelable(false)
-                       .setPositiveButton(R.string.yes,
-                               new DialogInterface.OnClickListener() {
-                                   public void onClick(DialogInterface dialog, int id) {
-                                       moveTaskToBack(true);
-                                       android.os.Process.killProcess(android.os.Process.myPid());
-                                       System.exit(1);
-                                   }
-                               })
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(R.string.exit_app);
+                alertDialogBuilder
+                        .setMessage(R.string.exit_message)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.yes,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        moveTaskToBack(true);
+                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                        System.exit(1);
+                                    }
+                                })
 
-                       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int id) {
-                               dialog.cancel();
-                           }
-                       });
-               AlertDialog alertDialog = alertDialogBuilder.create();
-               alertDialog.show();
-           }else{
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            } else {
 
-               getSupportFragmentManager()
-                       .beginTransaction()
-                       .replace(R.id.fragment_container,PopularMoviesFragment.newInstance())
-                       .commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, PopularMoviesFragment.newInstance())
+                        .commit();
                 navigationView.setCheckedItem(R.id.nd_popular);
-           }
+            }
         }
     }
+
     public void logout() {
 
         try {
@@ -213,12 +210,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nd_popular:
                 fragment = PopularMoviesFragment.newInstance();
-
                 break;
 
             case R.id.nd_top_rated:
                 fragment = TopRatedMoviesFragment.newInstance();
-
                 break;
 
             case R.id.nd_upcoming:
@@ -230,12 +225,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nd_search:
-
                 fragment = new SearchFragment();
                 break;
 
             case R.id.nd_favorites:
-                Toast.makeText(MainActivity.this, "Item selected", Toast.LENGTH_SHORT).show();
+                fragment = FavoritesFragment.newInstance();
                 break;
         }
 

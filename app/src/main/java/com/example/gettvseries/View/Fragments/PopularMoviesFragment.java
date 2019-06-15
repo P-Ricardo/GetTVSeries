@@ -1,12 +1,7 @@
 package com.example.gettvseries.View.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.gettvseries.Adapter.PaginationScrollListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.gettvseries.Adapter.MoviesAdapter;
+import com.example.gettvseries.Adapter.PaginationScrollListener;
 import com.example.gettvseries.Model.Entity.Movie;
 import com.example.gettvseries.Model.Services.Api.Constant;
 import com.example.gettvseries.Model.Services.Api.RetrofitConfig;
 import com.example.gettvseries.Model.Services.Responses.MovieResponse;
 import com.example.gettvseries.R;
+import com.example.gettvseries.View.Activities.MovieDetailsActivity;
 
 import java.util.List;
 
@@ -88,11 +91,25 @@ public class PopularMoviesFragment extends Fragment {
         adapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("TAG", "Movie CLicked :" + (position + 1));
+
+                openMovie(position);
             }
         });
 
         recyclerView.setAdapter(adapter);
+    }
+
+    private void openMovie(int position) {
+
+        /**
+         * TODO :
+         *  PRECISA ARRUMAR, O CONTEXTO ESTA NULO
+         */
+
+        Intent intent = new Intent(this.getContext(), MovieDetailsActivity.class);
+        intent.putExtra("getting movieID", adapter.get(position));
+
+        startActivity(intent);
     }
 
     private void incrementPage(int page) {
@@ -108,12 +125,11 @@ public class PopularMoviesFragment extends Fragment {
                 if (response.body() != null) {
 
                     List<Movie> movies = response.body().getResults();
-                    if (movies != null){
+                    if (movies != null) {
 
                         progressBar.setVisibility(View.GONE);
                         adapter.insertMovies(movies);
-                    }
-                    else
+                    } else
                         Log.d("TAG response", "onResponse: is null");
 
                 } else

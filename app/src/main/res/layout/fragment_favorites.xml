@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTitleBackground"
-        android:drawableEnd="@drawable/icon_popular"
+        android:drawableEnd="@drawable/icon_favorites"
         android:drawablePadding="8dp"
         android:gravity="end"
         android:padding="8dp"
-        android:text="@string/txt_popular"
+        android:text="@string/txt_favorites"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
@@ -23,7 +23,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_popular"
+            android:id="@+id/rv_favorite"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

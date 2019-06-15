@@ -1,11 +1,12 @@
 package com.example.gettvseries.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gettvseries.Model.Entity.Genre;
 import com.example.gettvseries.R;
@@ -25,7 +26,7 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
     @NonNull
     @Override
     public GenresAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.genre_button_item,
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_genre_button,
                 viewGroup,
                 false));
     }

@@ -5,6 +5,7 @@ import com.example.gettvseries.Model.Services.Responses.MovieResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Service {
@@ -41,6 +42,7 @@ public interface Service {
             @Query("api_key") String apiKey,
             @Query("language") String language,
             @Query("sort_by") String sortBy,
+            @Query("page") int pageIndex,
             @Query("with_genres") String genreId
     );
 
@@ -51,6 +53,13 @@ public interface Service {
             @Query("query") String query,
             @Query("include_adult") boolean adult,
             @Query("page") int page
+    );
+
+    @GET("movie/{movie_id}")
+    Call<MovieResponse> getMovie(
+            @Path("movie_id") String movieId,
+            @Query("api_key") String apiKey,
+            @Query("language") String language
     );
 
 }

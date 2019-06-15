@@ -3,9 +3,8 @@ package com.example.gettvseries.View.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.example.gettvseries.Firebase.ConfigFirebase;
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.example.gettvseries.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,7 +64,7 @@ public class Presentation extends IntroActivity {
     protected void onStart() {
         super.onStart();
 
-        authentication = ConfigFirebase.getFirebaseAuthentication();
+        authentication = ConfigurationFirebase.getFirebaseAuthentication();
         FirebaseUser currentUser = authentication.getCurrentUser();
 
         if (currentUser != null){

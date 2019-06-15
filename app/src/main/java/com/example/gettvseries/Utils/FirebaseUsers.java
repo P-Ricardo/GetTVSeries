@@ -1,10 +1,11 @@
 package com.example.gettvseries.Utils;
 
 import android.net.Uri;
-import androidx.annotation.NonNull;
 import android.util.Log;
 
-import com.example.gettvseries.Firebase.ConfigFirebase;
+import androidx.annotation.NonNull;
+
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,7 +16,7 @@ public class FirebaseUsers {
 
     public static String getUseridentifier(){
 
-        FirebaseAuth user = ConfigFirebase.getFirebaseAuthentication();
+        FirebaseAuth user = ConfigurationFirebase.getFirebaseAuthentication();
         String email = user.getCurrentUser().getEmail();
         String userIdentifier = Base64Custom.codeBase64(email);
 
@@ -24,7 +25,7 @@ public class FirebaseUsers {
 
     public static FirebaseUser getCurrentUser(){
 
-        FirebaseAuth user = ConfigFirebase.getFirebaseAuthentication();
+        FirebaseAuth user = ConfigurationFirebase.getFirebaseAuthentication();
         return user.getCurrentUser();
 
     }

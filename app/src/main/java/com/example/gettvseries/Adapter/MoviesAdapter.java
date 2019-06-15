@@ -1,7 +1,5 @@
 package com.example.gettvseries.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +7,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.gettvseries.Model.Entity.Movie;
@@ -49,12 +50,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 .with(viewHolder.itemView)
                 .load(Constant.IMAGE_URL + m.getPosterPath())
                 .into(viewHolder.imagePoster);
+
         viewHolder.bindClick(i);
     }
 
     @Override
     public int getItemCount() {
         return movies != null ? movies.size() : 0;
+    }
+
+    public Movie get(int position){
+        return movies.get(position);
     }
 
     public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {

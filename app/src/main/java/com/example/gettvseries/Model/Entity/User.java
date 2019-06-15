@@ -1,6 +1,6 @@
 package com.example.gettvseries.Model.Entity;
 
-import com.example.gettvseries.Firebase.ConfigFirebase;
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
@@ -16,7 +16,7 @@ public class User {
 
     public void save() {
 
-        DatabaseReference firebaseRef = ConfigFirebase.getFirebaseDatabase();
+        DatabaseReference firebaseRef = ConfigurationFirebase.getFirebaseDatabase();
         DatabaseReference user = firebaseRef.child("users").child(getUid());
         user.setValue(this);
     }
