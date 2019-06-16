@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gettvseries.Adapter.MoviesAdapter;
@@ -44,6 +45,8 @@ public class MovieGenreFragment extends Fragment {
     private ProgressBar progressBar;
     private String query = getArguments() != null ? getArguments().getString(ARG_QUERY) : "";
     private String genreName = getArguments() != null ? getArguments().getString(ARG_TITLE) : "Error";
+    private TextView toolbarGenreName;
+    private String genreMoviesId;
 
     public MovieGenreFragment() {
         // Requires empty public constructor
@@ -59,13 +62,17 @@ public class MovieGenreFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-
+        //toolbarGenreName = view.findViewById(R.id.toolbar_movie_name_genre);
+        //toolbarGenreName.setText(getArguments().getString("NameGenreKey"));
+        genreMoviesId = getArguments().getString("IdGenreKey");
         view = inflater.inflate(R.layout.fragment_movie_genre, container, false);
         adapter = new MoviesAdapter();
         progressBar = view.findViewById(R.id.progress_list);
@@ -73,10 +80,11 @@ public class MovieGenreFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
+        super.onActivityCreated(savedInstanceState);
         incrementPage(currentPage);
 
         recyclerView = view.findViewById(R.id.rv_movie_genre);
@@ -103,6 +111,7 @@ public class MovieGenreFragment extends Fragment {
         adapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
             @Override
             public void onClick(View v, int position) {
+
                 Log.d("TAG", "Movie CLicked :" + (position + 1));
             }
         });
@@ -117,7 +126,7 @@ public class MovieGenreFragment extends Fragment {
                 Constant.LANGUAGE,
                 Constant.SORT_BY_MORE_POPULARITY,
                 page,
-                query
+                genreMoviesId
         ).enqueue(new Callback<MovieResponse>() {
 
             @Override

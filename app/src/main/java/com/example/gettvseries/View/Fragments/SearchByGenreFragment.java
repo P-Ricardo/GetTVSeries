@@ -35,6 +35,7 @@ public class SearchByGenreFragment extends Fragment {
     private GenresAdapter adapter;
     private ProgressBar progressBar;
     private MovieGenreFragment genreFragment;
+    private List<Genre> mGenres;
 
     public SearchByGenreFragment() {
     }
@@ -71,7 +72,13 @@ public class SearchByGenreFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
 
-//                adapter.get
+                Toast.makeText(getContext(), mGenres.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Bundle pGenreValues = new Bundle();
+                pGenreValues.putString("NameGenreKey", String.valueOf(mGenres.get(position).getName()));
+                pGenreValues.putString("IdGenreKey",String.valueOf(mGenres.get(position).getId()));
+                Fragment fragment = new MovieGenreFragment();
+                fragment.setArguments(pGenreValues);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
             }
         });
@@ -93,6 +100,7 @@ public class SearchByGenreFragment extends Fragment {
                         if (response.body() != null){
 
                             List<Genre> genres = response.body().getGenres();
+                            mGenres = genres;
 
                             if (genres != null){
 

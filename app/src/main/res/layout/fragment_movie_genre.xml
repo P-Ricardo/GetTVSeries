@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/toolbar_movie_genre"
+        android:id="@+id/toolbar_movie_name_genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTitleBackground"
