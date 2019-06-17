@@ -42,6 +42,8 @@ public class Movie implements Parcelable {
     @SerializedName("runtime")
     private Integer runtime;
 
+    private String key;
+
     public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
                  Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
@@ -191,6 +193,14 @@ public class Movie implements Parcelable {
 
     public void setRuntime(Integer runtime) {
         this.runtime = runtime;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

@@ -14,12 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.example.gettvseries.Model.Entity.Movie;
 import com.example.gettvseries.Model.Services.Api.Constant;
 import com.example.gettvseries.Model.Services.Api.RetrofitConfig;
 import com.example.gettvseries.Model.Services.Responses.MovieResponse;
 import com.example.gettvseries.R;
+import com.example.gettvseries.Utils.Base64Custom;
 import com.example.gettvseries.Utils.Month;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageView backdrop;
     private RatingBar ratingBar;
     private Movie movie;
+    private Button buttonAdd;
+
+    private FirebaseAuth authentication = ConfigurationFirebase.getFirebaseAuthentication();
+    private DatabaseReference firebaseRef = ConfigurationFirebase.getFirebaseDatabase();
+    private DatabaseReference userRef;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         overview = findViewById(R.id.txt_overview);
         runtime = findViewById(R.id.txt_runtime);
 
-        Button buttonAdd = findViewById(R.id.btn_add_favorites);
+        buttonAdd = findViewById(R.id.btn_add_favorites);
         backdrop = findViewById(R.id.backdrop_img);
         ratingBar = findViewById(R.id.rb_movie);
 
@@ -64,7 +75,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // adicionar no firebase o filme
+
+                saveMovie();
+                Toast.makeText(getApplicationContext(),"Movie added to favorites", Toast.LENGTH_SHORT).show();
+                finish();
+                Log.d("TagButton", "Movie saved");
 
             }
         });
@@ -186,6 +201,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         }
         return month;
+    }
+
+    public void saveMovie(){
+
+        String userEmail = authentication.getCurrentUser().getEmail();
+        String userId = Base64Custom.codeBase64(userEmail);
+        userRef = firebaseRef.child("users").child(userId);
+        userRef.child("movies").push().setValue(this.movie);
     }
 
 
