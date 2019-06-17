@@ -29,10 +29,12 @@ public class SearchView extends FrameLayout {
 
     private AppCompatImageButton mClearButton;
 
-    public interface OnTextChangeListener{
+    public interface OnTextChangeListener {
 
         void onSuggestion(String suggestion);
+
         void onSubmitted(String submitted);
+
         void onCleared();
     }
 
@@ -74,7 +76,7 @@ public class SearchView extends FrameLayout {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SearchView);
         mHint = typedArray.getString(R.styleable.SearchView_hint);
-        mDrawable = typedArray.getResourceId(R.styleable.SearchView_drawable,R.drawable.ic_search_black_24dp);
+        mDrawable = typedArray.getResourceId(R.styleable.SearchView_drawable, R.drawable.ic_search_black_24dp);
         mDrawableColor = typedArray.getColor(R.styleable.SearchView_drawable_color, Color.parseColor("#ffffff"));
         typedArray.recycle();
         initView();
@@ -89,11 +91,11 @@ public class SearchView extends FrameLayout {
         mSearchView = findViewById(R.id.et_search);
         mClearButton = findViewById(R.id.ib_clear);
 
-        if(mHint!=null){
+        if (mHint != null) {
             mSearchView.setHint(mHint);
         }
 
-        Drawable drawableClear =  getResources().getDrawable(R.drawable.ic_close_black_24dp);
+        Drawable drawableClear = getResources().getDrawable(R.drawable.ic_close_black_24dp);
         drawableClear.setColorFilter(mDrawableColor, PorterDuff.Mode.SRC_IN);
         mClearButton.setImageDrawable(drawableClear);
 
@@ -105,7 +107,7 @@ public class SearchView extends FrameLayout {
             }
         });
 
-       setDrawable(mDrawable);
+        setDrawable(mDrawable);
 
         mSearchView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -119,19 +121,15 @@ public class SearchView extends FrameLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(mListener!=null){
-                    if(s.toString().isEmpty()){
+                if (mListener != null) {
+                    if (s.toString().isEmpty()) {
                         mClearButton.setVisibility(GONE);
                         mListener.onCleared();
-                    }else{
+                    } else {
                         mClearButton.setVisibility(VISIBLE);
                         mListener.onSuggestion(s.toString().trim());
                     }
                 }
-
-
-
-
             }
         });
 
@@ -140,7 +138,7 @@ public class SearchView extends FrameLayout {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindowToken(), 0);
                     mSearchView.clearFocus();
 
@@ -179,7 +177,7 @@ public class SearchView extends FrameLayout {
     public void setDrawable(@DrawableRes int drawable) {
         this.mDrawable = drawable;
         mSearchView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                coloredDrawable(drawable, mDrawableColor),null,null,null);
+                coloredDrawable(drawable, mDrawableColor), null, null, null);
     }
 
     @ColorInt
@@ -193,7 +191,7 @@ public class SearchView extends FrameLayout {
     }
 
     private Drawable coloredDrawable(@DrawableRes int drawable, @ColorInt int color) {
-        Drawable d =  getResources().getDrawable(drawable);
+        Drawable d = getResources().getDrawable(drawable);
         d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         return d;
     }

@@ -10,9 +10,9 @@
 
     <com.example.searchlibrary.SearchView
         android:id="@+id/sv_search"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
