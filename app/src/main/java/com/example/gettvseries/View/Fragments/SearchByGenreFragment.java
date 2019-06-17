@@ -72,9 +72,9 @@ public class SearchByGenreFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
 
-                Toast.makeText(getContext(), mGenres.get(position).getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), mGenres.get(position).getName(), Toast.LENGTH_SHORT).show();
                 Bundle pGenreValues = new Bundle();
-                pGenreValues.putString("NameGenreKey", String.valueOf(mGenres.get(position).getName()));
+                //pGenreValues.putString("NameGenreKey", String.valueOf(mGenres.get(position).getName()));
                 pGenreValues.putString("IdGenreKey",String.valueOf(mGenres.get(position).getId()));
                 Fragment fragment = new MovieGenreFragment();
                 fragment.setArguments(pGenreValues);

@@ -2,12 +2,15 @@ package com.example.gettvseries.Utils;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -42,7 +45,7 @@ public class FirebaseUsers {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (!task.isSuccessful()){
 
-                        Log.d("Perfil", "Erro ao atualizar nome de perfil.");
+                        Log.d("Profile", "Error changing name");
                     }
                 }
             });
@@ -82,4 +85,52 @@ public class FirebaseUsers {
         }
     }
 
+    public static Boolean updateUserPassword(String string) {
+
+    /*
+        try{
+            com.google.firebase.auth.FirebaseUser user = getCurrentUser();
+            user.updatePassword(string).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (!task.isSuccessful()){
+
+                        Log.d("Profile", "Error changing password");
+                    }
+                }
+            });
+            return true;
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return false;
+        }
+    }
+    */
+
+        try {
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            user.updatePassword(string)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("UserPassword", "User password updated.");
+
+                            }
+                        }
+                    });
+
+            return true;
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }

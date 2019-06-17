@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -25,10 +26,12 @@ import com.example.gettvseries.Firebase.ConfigurationFirebase;
 import com.example.gettvseries.R;
 import com.example.gettvseries.Utils.FirebaseUsers;
 import com.example.gettvseries.Utils.Permission;
+import com.example.gettvseries.View.Activities.MainActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
@@ -48,8 +51,11 @@ public class UserSettingsFragment extends Fragment {
     private StorageReference storageReference;
     private String userIdentifier;
     private EditText editProfileName;
+    private EditText editUserPassword;
+    private EditText editConfirmUpdatePassword;
     private View view;
     private FirebaseAuth authentication;
+    private Button saveName, savePassword;
 
     private String[] necessaryPermissions = new String[]{
 
@@ -67,7 +73,7 @@ public class UserSettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_user_settings, container, false);
 
@@ -79,6 +85,18 @@ public class UserSettingsFragment extends Fragment {
         imageButtonGallery = view.findViewById(R.id.imageButtonGallery);
         circleImageView = view.findViewById(R.id.circleImageView);
         editProfileName = view.findViewById(R.id.editProfileName);
+        editUserPassword = view.findViewById(R.id.editUpdateUserPassword);
+        editConfirmUpdatePassword = view.findViewById(R.id.editConfirmUpdatePassword);
+        saveName = view.findViewById(R.id.bnt_save_username);
+        savePassword = view.findViewById(R.id.bnt_save_password);
+        editProfileName.setEnabled(false);
+        editUserPassword.setEnabled(false);
+        editConfirmUpdatePassword.setEnabled(false);
+        saveName.setEnabled(false);
+        savePassword.setEnabled(false);
+
+
+
         fab = view.findViewById(R.id.fab);
 
         Permission.validatePermissions(necessaryPermissions, getActivity(), 1);
@@ -136,24 +154,74 @@ public class UserSettingsFragment extends Fragment {
             }
         });
 
+        saveName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String username = editProfileName.getText().toString();
+                if (!username.isEmpty()){
+                    if (updateUserName(username)){
+
+                        Snackbar.make(view, "Username updated successfully", Snackbar.LENGTH_SHORT).show();
+                        enableFalse();
+                    }
+                }else {
+
+                    Snackbar.make(view, "The name field is empty", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        savePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String password = editUserPassword.getText().toString();
+                String confirmPassword = editConfirmUpdatePassword.getText().toString();
+                if (!password.isEmpty()){
+                    if (!confirmPassword.isEmpty()){
+
+                        if (password.equals(confirmPassword)){
+
+                            if (updateUserPassword(confirmPassword)){
+                                Snackbar.make(view, "Password updated successfully", Snackbar.LENGTH_SHORT).show();
+                                enableFalse();
+                            }
+                        }else {
+                            Snackbar.make(view, "Passwords do not match", Snackbar.LENGTH_SHORT).show();
+                            editProfileName.setEnabled(true);
+                            editUserPassword.setEnabled(true);
+                            editConfirmUpdatePassword.setEnabled(true);
+                        }
+                    }else {
+                        Snackbar.make(view, "Confirm your password.", Snackbar.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Snackbar.make(view, "Password field empty.", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editProfileName.isEnabled()) {
-                    editProfileName.setEnabled(false);
-                    fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_edit_white_24dp));
-                    //salvar aqui
+                if (editProfileName.isEnabled()||
+                        saveName.isEnabled()||
+                        editUserPassword.isEnabled()||
+                        savePassword.isEnabled()||
+                        editConfirmUpdatePassword.isEnabled()
+                ){
+                    enableFalse();
+
                 } else {
-                    editProfileName.setEnabled(true);
-                    editProfileName.requestFocus();
-                    fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_save_white_24dp));
+                    enableTrue();
                 }
             }
         });
 
         return view;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -239,6 +307,16 @@ public class UserSettingsFragment extends Fragment {
         FirebaseUsers.updateUserProfilePicture(url);
     }
 
+    public Boolean updateUserName(String string){
+
+        return FirebaseUsers.updateUserName(string);
+    }
+
+    public Boolean updateUserPassword(String string){
+
+        return FirebaseUsers.updateUserPassword(string);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -267,4 +345,26 @@ public class UserSettingsFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    public void enableTrue(){
+
+        editProfileName.setEnabled(true);
+        editUserPassword.setEnabled(true);
+        editConfirmUpdatePassword.setEnabled(true);
+        saveName.setEnabled(true);
+        savePassword.setEnabled(true);
+        editProfileName.requestFocus();
+        editUserPassword.requestFocus();
+        editConfirmUpdatePassword.requestFocus();
+        fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_lock_white_24dp));
+    }
+    public void enableFalse(){
+
+        editProfileName.setEnabled(false);
+        saveName.setEnabled(false);
+        editUserPassword.setEnabled(false);
+        savePassword.setEnabled(false);
+        editConfirmUpdatePassword.setEnabled(false);
+        fab.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.ic_edit_white_24dp));
+    }
+
 }
