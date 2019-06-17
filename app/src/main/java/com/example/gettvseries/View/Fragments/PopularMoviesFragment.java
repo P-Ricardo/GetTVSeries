@@ -40,7 +40,6 @@ public class PopularMoviesFragment extends Fragment {
     private int currentPage = 1;
     private MoviesAdapter adapter;
     private ProgressBar progressBar;
-    private List<Movie> movieList;
 
     public PopularMoviesFragment() {
         // Requires empty public constructor
@@ -95,11 +94,17 @@ public class PopularMoviesFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
 
+                if(adapter.getItemCount() != 0 && position != -1){
+
+                    loadContent(position);
+                }
+            }
+
+            private void loadContent(int position) {
+
                 Bundle bundleMovieId = new Bundle();
-                bundleMovieId.putString("MovieIdKey", String.valueOf(movieList.get(position).getId()));
+                bundleMovieId.putString("MovieIdKey", String.valueOf(adapter.get(position).getId()));
                 Intent in = new Intent(getActivity(), MovieDetailsActivity.class);
-
-
                 in.putExtras(bundleMovieId);
                 startActivity(in);
 
@@ -123,7 +128,6 @@ public class PopularMoviesFragment extends Fragment {
                 if (response.body() != null) {
 
                     List<Movie> movies = response.body().getResults();
-                    movieList = movies;
 
                     if (movies != null) {
 

@@ -33,6 +33,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView title;
     private TextView releaseDate;
     private TextView ratingValue;
+    private TextView runtime;
     private TextView overview;
     private ImageView backdrop;
     private RatingBar ratingBar;
@@ -50,6 +51,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         releaseDate = findViewById(R.id.txt_release_date);
         ratingValue = findViewById(R.id.rating_value);
         overview = findViewById(R.id.txt_overview);
+        runtime = findViewById(R.id.txt_runtime);
 
         buttonAdd = findViewById(R.id.btn_add_favorites);
         backdrop = findViewById(R.id.backdrop_img);
@@ -59,10 +61,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         movieId = "";
         movieId = bundle != null ? bundle.getString("MovieIdKey") : "";
-
-        if(bundle == null){
-            Log.d("Movies Activity", "Deu erro");
-        }
 
         loadContent(movieId);
 
@@ -77,8 +75,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void loadContent(String movieId) {
-
-        Log.d("id_movie", "id: " + movieId);
 
         RetrofitConfig.getService().getMovie(
                 movieId,
@@ -109,6 +105,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         title.setText(movie.getTitle());
         releaseDate.setText(dateFormatter(movie.getReleaseDate()));
         overview.setText(movie.getOverview());
+        runtime.setText("Runtime: " + (movie.getRuntime() != null ? hourFormatter(movie.getRuntime()) : 0));
 
         ratingValue.setText(movie.getVoteAverage().toString());
         ratingBar.setRating(movie.getVoteAverage().floatValue()/2);
@@ -118,6 +115,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .with(getApplicationContext())
                 .load(Constant.IMAGE_URL + movie.getBackdropPath())
                 .into(backdrop);
+    }
+
+    private String hourFormatter(Integer runtime) {
+
+        int hours = runtime / 60;
+        int minutes = runtime % 60;
+
+        if (hours == 0)
+            return runtime + " min";
+
+        return hours + "h" + (minutes > 10 ? minutes : "0" + minutes);
     }
 
 
@@ -138,6 +146,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int i = substring.charAt(0) == '0' ?
                 Character.getNumericValue(substring.charAt(1)) : Integer.parseInt(substring);
 
+        i--;
         Month m = Month.values()[i];
 
         switch (m) {

@@ -39,10 +39,12 @@ public class Movie implements Parcelable {
     private Boolean video;
     @SerializedName("vote_average")
     private Double voteAverage;
+    @SerializedName("runtime")
+    private Integer runtime;
 
     public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
-                 Integer voteCount, Boolean video, Double voteAverage) {
+                 Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -57,6 +59,7 @@ public class Movie implements Parcelable {
         this.voteCount = voteCount;
         this.video = video;
         this.voteAverage = voteAverage;
+        this.runtime = runtime;
     }
 
     public Movie() {
@@ -182,6 +185,14 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
+    public Integer getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(Integer runtime) {
+        this.runtime = runtime;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -203,6 +214,7 @@ public class Movie implements Parcelable {
         dest.writeValue(this.voteCount);
         dest.writeValue(this.video);
         dest.writeValue(this.voteAverage);
+        dest.writeValue(this.runtime);
     }
 
     protected Movie(Parcel in) {
@@ -221,6 +233,7 @@ public class Movie implements Parcelable {
         this.voteCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.video = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
+        this.runtime = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

@@ -35,7 +35,7 @@ public class PaginationScrollListener extends RecyclerView.OnScrollListener {
         int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
         if (mIsScrolling &&
-                (visibleItemCount + firstVisibleItemPosition + 12) >= totalItemCount &&
+                (visibleItemCount + firstVisibleItemPosition + 10) >= totalItemCount &&
                 firstVisibleItemPosition >= 0) {
 
             mIsScrolling = false;

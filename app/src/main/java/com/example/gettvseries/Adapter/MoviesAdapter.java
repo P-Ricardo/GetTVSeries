@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.gettvseries.Model.Entity.Movie;
 import com.example.gettvseries.Model.Services.Api.Constant;
 import com.example.gettvseries.R;
+import com.example.gettvseries.Utils.Month;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
         viewHolder.title.setText(m.getTitle());
         viewHolder.overview.setText(m.getOverview());
-        viewHolder.year.setText(m.getReleaseDate());
+        viewHolder.year.setText(formatDate(m.getReleaseDate()));
 
         Glide
                 .with(viewHolder.itemView)
@@ -52,6 +53,63 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 .into(viewHolder.imagePoster);
 
         viewHolder.bindClick(i);
+    }
+
+    private String formatDate(String releaseDate) {
+
+        return getMonth(releaseDate.substring(5,7)) + " | " + releaseDate.substring(0,4);
+    }
+
+    private String getMonth(String substring) {
+
+        String month = "";
+
+        int i = substring.charAt(0) == '0' ?
+                Character.getNumericValue(substring.charAt(1)) : Integer.parseInt(substring);
+
+        i--;
+        Month m = Month.values()[i];
+
+        switch (m) {
+            case JANUARY:
+                month = "JAN";
+                break;
+            case FEBRUARY:
+                month = "FEB";
+                break;
+            case MARCH:
+                month = "MAR";
+                break;
+            case APRIL:
+                month = "APR";
+                break;
+            case MAY:
+                month = "MAY";
+                break;
+            case JUNE:
+                month = "JUN";
+                break;
+            case JULY:
+                month = "JUL";
+                break;
+            case AUGUST:
+                month = "AUG";
+                break;
+            case SEPTEMBER:
+                month = "SEP";
+                break;
+            case OCTOBER:
+                month = "OCT";
+                break;
+            case NOVEMBER:
+                month = "NOV";
+                break;
+            case DECEMBER:
+                month = "DEC";
+                break;
+
+        }
+        return month;
     }
 
     @Override

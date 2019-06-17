@@ -1,5 +1,6 @@
 package com.example.gettvseries.View.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.gettvseries.Model.Services.Api.Constant;
 import com.example.gettvseries.Model.Services.Api.RetrofitConfig;
 import com.example.gettvseries.Model.Services.Responses.MovieResponse;
 import com.example.gettvseries.R;
+import com.example.gettvseries.View.Activities.MovieDetailsActivity;
 
 import java.util.List;
 
@@ -88,7 +90,21 @@ public class TopRatedMoviesFragment extends Fragment {
         adapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("TAG", "Movie CLicked :" + (position + 1));
+
+                if(adapter.getItemCount() != 0 && position != -1){
+
+                    loadContent(position);
+                }
+            }
+
+            private void loadContent(int position) {
+
+                Bundle bundleMovieId = new Bundle();
+                bundleMovieId.putString("MovieIdKey", String.valueOf(adapter.get(position).getId()));
+                Intent in = new Intent(getActivity(), MovieDetailsActivity.class);
+                in.putExtras(bundleMovieId);
+                startActivity(in);
+
             }
         });
 
