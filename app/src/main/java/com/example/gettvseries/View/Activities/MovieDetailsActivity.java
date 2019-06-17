@@ -38,8 +38,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button buttonAdd;
     private String movieId;
-    private List<Movie> movies = new ArrayList<>();
     private Intent intent;
+    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.rb_movie);
 
         intent = getIntent();
-        Movie movie = intent.getParcelableExtra("getting movieID");
+        Bundle bundle = getIntent().getExtras();
+        movieId = "";
+        movieId = bundle != null ? bundle.getString("MovieIdKey") : "";
 
-        if(movie != null){
-            Log.d("Movies Activity", "Esta nullllll");
+        if(bundle == null){
+            Log.d("Movies Activity", "Deu erro");
         }
 
-        loadContent(movie.getId().toString());
+        loadContent(movieId);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,24 +78,25 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void loadContent(String movieId) {
 
+        Log.d("id_movie", "id: " + movieId);
+
         RetrofitConfig.getService().getMovie(
                 movieId,
                 Constant.API_KEY,
                 Constant.LANGUAGE
-        ).enqueue(new Callback<MovieResponse>() {
+        ).enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
 
                 if (response.body() != null) {
 
-                    movies = response.body().getResults();
-                    if (movies != null)
-                        setScreenContent(movies.get(0));
+                    movie = response.body();
+                    setScreenContent(movie);
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
+            public void onFailure(Call<Movie> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
                 Log.d("Error connection", t.getMessage());
             }
@@ -108,7 +111,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         overview.setText(movie.getOverview());
 
         ratingValue.setText(movie.getVoteAverage().toString());
-        ratingBar.setRating(movie.getVoteAverage().floatValue());
+        ratingBar.setRating(movie.getVoteAverage().floatValue()/2);
+        ratingBar.setStepSize(0.01f);
 
         Glide
                 .with(getApplicationContext())

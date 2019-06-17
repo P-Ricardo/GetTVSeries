@@ -1,7 +1,9 @@
 package com.example.gettvseries.View.Fragments;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.text.style.BulletSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ public class PopularMoviesFragment extends Fragment {
     private int currentPage = 1;
     private MoviesAdapter adapter;
     private ProgressBar progressBar;
+    private List<Movie> movieList;
 
     public PopularMoviesFragment() {
         // Requires empty public constructor
@@ -92,25 +95,20 @@ public class PopularMoviesFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
 
-                openMovie(position);
+                Bundle bundleMovieId = new Bundle();
+                bundleMovieId.putString("MovieIdKey", String.valueOf(movieList.get(position).getId()));
+                Intent in = new Intent(getActivity(), MovieDetailsActivity.class);
+
+
+                in.putExtras(bundleMovieId);
+                startActivity(in);
+
             }
         });
 
         recyclerView.setAdapter(adapter);
     }
 
-    private void openMovie(int position) {
-
-        /**
-         * TODO :
-         *  PRECISA ARRUMAR, O CONTEXTO ESTA NULO
-         */
-
-        Intent intent = new Intent(this.getContext(), MovieDetailsActivity.class);
-        intent.putExtra("getting movieID", adapter.get(position));
-
-        startActivity(intent);
-    }
 
     private void incrementPage(int page) {
 
@@ -125,6 +123,8 @@ public class PopularMoviesFragment extends Fragment {
                 if (response.body() != null) {
 
                     List<Movie> movies = response.body().getResults();
+                    movieList = movies;
+
                     if (movies != null) {
 
                         progressBar.setVisibility(View.GONE);

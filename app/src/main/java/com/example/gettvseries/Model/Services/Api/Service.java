@@ -1,5 +1,6 @@
 package com.example.gettvseries.Model.Services.Api;
 
+import com.example.gettvseries.Model.Entity.Movie;
 import com.example.gettvseries.Model.Services.Responses.GenreResponse;
 import com.example.gettvseries.Model.Services.Responses.MovieResponse;
 
@@ -56,7 +57,7 @@ public interface Service {
     );
 
     @GET("movie/{movie_id}")
-    Call<MovieResponse> getMovie(
+    Call<Movie> getMovie(
             @Path("movie_id") String movieId,
             @Query("api_key") String apiKey,
             @Query("language") String language
