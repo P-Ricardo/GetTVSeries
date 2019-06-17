@@ -37,9 +37,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView overview;
     private ImageView backdrop;
     private RatingBar ratingBar;
-    private Button buttonAdd;
-    private String movieId;
-    private Intent intent;
     private Movie movie;
 
     @Override
@@ -53,13 +50,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         overview = findViewById(R.id.txt_overview);
         runtime = findViewById(R.id.txt_runtime);
 
-        buttonAdd = findViewById(R.id.btn_add_favorites);
+        Button buttonAdd = findViewById(R.id.btn_add_favorites);
         backdrop = findViewById(R.id.backdrop_img);
         ratingBar = findViewById(R.id.rb_movie);
 
-        intent = getIntent();
+        Intent intent = getIntent();
         Bundle bundle = getIntent().getExtras();
-        movieId = "";
+        String movieId = "";
         movieId = bundle != null ? bundle.getString("MovieIdKey") : "";
 
         loadContent(movieId);
@@ -68,7 +65,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // adicionar no firebase o filme
-                Log.d("TagButton", "Olha aeeee");
+
             }
         });
 

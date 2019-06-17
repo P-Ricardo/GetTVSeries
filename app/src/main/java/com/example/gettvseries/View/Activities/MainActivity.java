@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nd_search:
-                fragment = new SearchFragment();
+                fragment = SearchFragment.newInstance();
                 break;
 
             case R.id.nd_favorites:

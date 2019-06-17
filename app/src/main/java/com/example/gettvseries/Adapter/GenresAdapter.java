@@ -78,6 +78,10 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
         }
     }
 
+    public Genre get(int position){
+        return genres.get(position);
+    }
+
 
 
 
